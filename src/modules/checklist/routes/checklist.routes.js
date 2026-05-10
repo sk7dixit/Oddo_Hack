@@ -1,5 +1,4 @@
 import express from "express";
-
 import {
   createChecklist,
   getChecklist,
@@ -9,9 +8,7 @@ import {
 const router = express.Router();
 
 router.post("/", createChecklist);
-
 router.get("/:tripId", getChecklist);
-
 router.put("/:id", updateChecklist);
 
 export default router;

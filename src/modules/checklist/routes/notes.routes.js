@@ -1,5 +1,4 @@
 import express from "express";
-
 import {
   createNote,
   getNotes,
@@ -8,7 +7,6 @@ import {
 const router = express.Router();
 
 router.post("/", createNote);
-
 router.get("/:tripId", getNotes);
 
 export default router;

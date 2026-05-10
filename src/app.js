@@ -9,15 +9,18 @@ dotenv.config();
 
 const app = express();
 
+// Middleware
 app.use(cors());
 app.use(express.json());
 
+// Routes
 app.use("/api/checklist", checklistRoutes);
 app.use("/api/notes", notesRoutes);
 app.use("/api/public", publicRoutes);
 
+// Health Check
 app.get("/", (req, res) => {
-  res.send("Traveloop API is running...");
+  res.status(200).json({ success: true, message: "Traveloop API is running..." });
 });
 
 export default app;
