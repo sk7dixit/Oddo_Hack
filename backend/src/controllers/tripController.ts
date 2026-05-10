@@ -24,13 +24,14 @@ export const tripController = {
       await ensureMockUser();
       const trips = await tripService.getAllTrips(MOCK_USER_ID);
       res.status(200).json(trips);
-    } catch (error) {
+    } catch (error: any) {
+      console.log("DATABASE ERROR:", error);
       console.error("Trip Fetch Error:", error);
       res.status(500).json({ error: 'Failed to fetch trips' });
     }
   },
 
-  getTripById: async (req: Request, res: Response) => {
+  getTripById: async (req: Request<{ id: string }>, res: Response) => {
     try {
       await ensureMockUser();
       const trip = await tripService.getTripById(req.params.id, MOCK_USER_ID);
@@ -47,13 +48,13 @@ export const tripController = {
       await ensureMockUser();
       const trip = await tripService.createTrip(MOCK_USER_ID, req.body);
       res.status(201).json(trip);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Trip Create Error:", error);
       res.status(500).json({ error: 'Failed to create trip' });
     }
   },
 
-  updateTrip: async (req: Request, res: Response) => {
+  updateTrip: async (req: Request<{ id: string }>, res: Response) => {
     try {
       await ensureMockUser();
       await tripService.updateTrip(req.params.id, MOCK_USER_ID, req.body);
@@ -64,7 +65,7 @@ export const tripController = {
     }
   },
 
-  deleteTrip: async (req: Request, res: Response) => {
+  deleteTrip: async (req: Request<{ id: string }>, res: Response) => {
     try {
       await ensureMockUser();
       await tripService.deleteTrip(req.params.id, MOCK_USER_ID);

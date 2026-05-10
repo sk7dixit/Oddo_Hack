@@ -95,7 +95,7 @@ const TripForm: React.FC<TripFormProps> = ({ initialData, onSubmit, onCancel, lo
           className="btn btn-primary" 
           style={{ flex: 1, padding: '12px' }}
         >
-          {loading ? 'Saving...' : 'Create Trip'}
+          {loading ? 'Saving...' : 'Save'}
         </button>
         <button 
           type="button" 
