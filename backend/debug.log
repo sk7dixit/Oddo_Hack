@@ -1,0 +1,117 @@
+[2026-05-10T07:42:10.541Z] POST /api/user/profile-photo
+[2026-05-10T07:48:18.746Z] POST /api/user/profile-photo
+[2026-05-10T07:48:18.758Z] GLOBAL ERROR: Error: Must supply api_key
+    at ensureOption (D:\TRAVELOOP — COMMON PROJECT STRUCTURE\TRAVELOOP — COMMON PROJECT STRUCTURE\backend\node_modules\cloudinary\lib\utils\ensureOption.js:19:13)
+    at Object.sign_request (D:\TRAVELOOP — COMMON PROJECT STRUCTURE\TRAVELOOP — COMMON PROJECT STRUCTURE\backend\node_modules\cloudinary\lib\utils\index.js:1154:16)
+    at Object.process_request_params (D:\TRAVELOOP — COMMON PROJECT STRUCTURE\TRAVELOOP — COMMON PROJECT STRUCTURE\backend\node_modules\cloudinary\lib\utils\index.js:1206:22)
+    at call_api (D:\TRAVELOOP — COMMON PROJECT STRUCTURE\TRAVELOOP — COMMON PROJECT STRUCTURE\backend\node_modules\cloudinary\lib\uploader.js:488:18)
+    at Object.upload (D:\TRAVELOOP — COMMON PROJECT STRUCTURE\TRAVELOOP — COMMON PROJECT STRUCTURE\backend\node_modules\cloudinary\lib\uploader.js:55:10)
+    at Object.upload_stream (D:\TRAVELOOP — COMMON PROJECT STRUCTURE\TRAVELOOP — COMMON PROJECT STRUCTURE\backend\node_modules\cloudinary\lib\uploader.js:42:18)
+    at Object.upload_stream (D:\TRAVELOOP — COMMON PROJECT STRUCTURE\TRAVELOOP — COMMON PROJECT STRUCTURE\backend\node_modules\cloudinary\lib\utils\index.js:1405:21)
+    at D:\TRAVELOOP — COMMON PROJECT STRUCTURE\TRAVELOOP — COMMON PROJECT STRUCTURE\backend\node_modules\multer-storage-cloudinary\lib\index.js:128:52
+    at new Promise (<anonymous>)
+    at CloudinaryStorage.upload (D:\TRAVELOOP — COMMON PROJECT STRUCTURE\TRAVELOOP — COMMON PROJECT STRUCTURE\backend\node_modules\multer-storage-cloudinary\lib\index.js:127:16)
+[2026-05-10T07:49:31.052Z] POST /api/user/profile-photo
+[2026-05-10T07:49:31.054Z] GLOBAL ERROR: Error: Must supply api_key
+    at ensureOption (D:\TRAVELOOP — COMMON PROJECT STRUCTURE\TRAVELOOP — COMMON PROJECT STRUCTURE\backend\node_modules\cloudinary\lib\utils\ensureOption.js:19:13)
+    at Object.sign_request (D:\TRAVELOOP — COMMON PROJECT STRUCTURE\TRAVELOOP — COMMON PROJECT STRUCTURE\backend\node_modules\cloudinary\lib\utils\index.js:1154:16)
+    at Object.process_request_params (D:\TRAVELOOP — COMMON PROJECT STRUCTURE\TRAVELOOP — COMMON PROJECT STRUCTURE\backend\node_modules\cloudinary\lib\utils\index.js:1206:22)
+    at call_api (D:\TRAVELOOP — COMMON PROJECT STRUCTURE\TRAVELOOP — COMMON PROJECT STRUCTURE\backend\node_modules\cloudinary\lib\uploader.js:488:18)
+    at Object.upload (D:\TRAVELOOP — COMMON PROJECT STRUCTURE\TRAVELOOP — COMMON PROJECT STRUCTURE\backend\node_modules\cloudinary\lib\uploader.js:55:10)
+    at Object.upload_stream (D:\TRAVELOOP — COMMON PROJECT STRUCTURE\TRAVELOOP — COMMON PROJECT STRUCTURE\backend\node_modules\cloudinary\lib\uploader.js:42:18)
+    at Object.upload_stream (D:\TRAVELOOP — COMMON PROJECT STRUCTURE\TRAVELOOP — COMMON PROJECT STRUCTURE\backend\node_modules\cloudinary\lib\utils\index.js:1405:21)
+    at D:\TRAVELOOP — COMMON PROJECT STRUCTURE\TRAVELOOP — COMMON PROJECT STRUCTURE\backend\node_modules\multer-storage-cloudinary\lib\index.js:128:52
+    at new Promise (<anonymous>)
+    at CloudinaryStorage.upload (D:\TRAVELOOP — COMMON PROJECT STRUCTURE\TRAVELOOP — COMMON PROJECT STRUCTURE\backend\node_modules\multer-storage-cloudinary\lib\index.js:127:16)
+[2026-05-10T07:51:19.783Z] POST /api/user/profile-photo
+[2026-05-10T07:51:19.787Z] GLOBAL ERROR: Error: Must supply api_key
+    at ensureOption (D:\TRAVELOOP — COMMON PROJECT STRUCTURE\TRAVELOOP — COMMON PROJECT STRUCTURE\backend\node_modules\cloudinary\lib\utils\ensureOption.js:19:13)
+    at Object.sign_request (D:\TRAVELOOP — COMMON PROJECT STRUCTURE\TRAVELOOP — COMMON PROJECT STRUCTURE\backend\node_modules\cloudinary\lib\utils\index.js:1154:16)
+    at Object.process_request_params (D:\TRAVELOOP — COMMON PROJECT STRUCTURE\TRAVELOOP — COMMON PROJECT STRUCTURE\backend\node_modules\cloudinary\lib\utils\index.js:1206:22)
+    at call_api (D:\TRAVELOOP — COMMON PROJECT STRUCTURE\TRAVELOOP — COMMON PROJECT STRUCTURE\backend\node_modules\cloudinary\lib\uploader.js:488:18)
+    at Object.upload (D:\TRAVELOOP — COMMON PROJECT STRUCTURE\TRAVELOOP — COMMON PROJECT STRUCTURE\backend\node_modules\cloudinary\lib\uploader.js:55:10)
+    at Object.upload_stream (D:\TRAVELOOP — COMMON PROJECT STRUCTURE\TRAVELOOP — COMMON PROJECT STRUCTURE\backend\node_modules\cloudinary\lib\uploader.js:42:18)
+    at Object.upload_stream (D:\TRAVELOOP — COMMON PROJECT STRUCTURE\TRAVELOOP — COMMON PROJECT STRUCTURE\backend\node_modules\cloudinary\lib\utils\index.js:1405:21)
+    at D:\TRAVELOOP — COMMON PROJECT STRUCTURE\TRAVELOOP — COMMON PROJECT STRUCTURE\backend\node_modules\multer-storage-cloudinary\lib\index.js:128:52
+    at new Promise (<anonymous>)
+    at CloudinaryStorage.upload (D:\TRAVELOOP — COMMON PROJECT STRUCTURE\TRAVELOOP — COMMON PROJECT STRUCTURE\backend\node_modules\multer-storage-cloudinary\lib\index.js:127:16)
+[2026-05-10T07:53:54.544Z] POST /api/user/profile-photo
+[2026-05-10T07:53:59.621Z] GLOBAL ERROR: [object Object]
+[2026-05-10T07:54:21.003Z] POST /api/user/profile-photo
+[2026-05-10T08:14:29.954Z] POST /api/user/profile-photo
+[2026-05-10T08:33:01.048Z] GET /api/trips
+[2026-05-10T08:33:01.077Z] GET /api/trips
+[2026-05-10T08:33:11.519Z] GET /api/trips
+[2026-05-10T08:33:16.649Z] GET /trips
+[2026-05-10T08:33:23.795Z] GET /api/trips
+[2026-05-10T08:33:23.816Z] GET /api/trips
+[2026-05-10T08:35:58.424Z] POST /api/trips
+[2026-05-10T08:36:22.697Z] GET /
+[2026-05-10T08:36:23.047Z] GET /favicon.ico
+[2026-05-10T08:36:26.781Z] GET /api
+[2026-05-10T08:36:40.144Z] GET /api/trips
+[2026-05-10T08:36:40.161Z] GET /api/trips
+[2026-05-10T08:36:59.162Z] GET /trips
+[2026-05-10T08:36:59.168Z] GET /api/trips
+[2026-05-10T08:36:59.175Z] GET /api/v1/trips
+[2026-05-10T08:36:59.183Z] GET /health
+[2026-05-10T08:37:05.088Z] GET /api/trips
+[2026-05-10T08:37:10.508Z] GET /trips
+[2026-05-10T08:37:48.444Z] GET /api/trips
+[2026-05-10T08:37:48.449Z] GET /api/trips
+[2026-05-10T08:37:59.844Z] GET /
+[2026-05-10T08:38:06.848Z] GET /api/trips
+[2026-05-10T08:43:35.555Z] GET /api/trips
+[2026-05-10T08:43:38.014Z] GET /api/trips
+[2026-05-10T08:44:12.136Z] GET /api/trips
+[2026-05-10T08:44:14.545Z] GET /api/trips
+[2026-05-10T08:44:53.318Z] POST /api/trips
+[2026-05-10T08:45:18.595Z] GET /api/trips
+[2026-05-10T08:45:32.609Z] GET /api/trips
+[2026-05-10T08:45:34.717Z] GET /api/trips
+[2026-05-10T08:45:54.569Z] GET /api/trips
+[2026-05-10T08:46:45.049Z] POST /api/trips
+[2026-05-10T08:47:36.824Z] GET /api/trips
+[2026-05-10T08:47:39.332Z] GET /api/trips
+[2026-05-10T08:47:42.530Z] GET /api/trips
+[2026-05-10T08:47:44.681Z] GET /api/trips
+[2026-05-10T08:47:48.686Z] GET /api/trips
+[2026-05-10T08:47:51.629Z] GET /api/trips
+[2026-05-10T08:48:18.662Z] GET /api/trips
+[2026-05-10T08:48:21.846Z] GET /api/trips
+[2026-05-10T08:52:28.648Z] GET /api/trips
+[2026-05-10T08:54:00.745Z] GET /api/trips
+[2026-05-10T08:55:07.066Z] GET /api/trips
+[2026-05-10T09:02:00.122Z] GET /api/trips
+[2026-05-10T09:02:03.756Z] GET /api/trips
+[2026-05-10T09:07:36.898Z] GET /api/trips
+[2026-05-10T09:08:31.854Z] GET /api/trips
+[2026-05-10T09:08:34.111Z] GET /api/trips
+[2026-05-10T09:08:41.654Z] GET /api/trips
+[2026-05-10T09:08:42.186Z] GET /api/trips
+[2026-05-10T09:08:45.753Z] GET /api/trips
+[2026-05-10T09:08:46.304Z] GET /api/trips
+[2026-05-10T09:08:58.920Z] GET /api/trips
+[2026-05-10T09:09:02.567Z] GET /api/trips
+[2026-05-10T09:11:04.696Z] POST /api/trips
+[2026-05-10T09:11:07.724Z] GET /api/trips
+[2026-05-10T09:11:08.327Z] GET /api/trips
+[2026-05-10T09:11:15.531Z] GET /api/trips
+[2026-05-10T09:11:16.141Z] GET /api/trips
+[2026-05-10T09:11:46.642Z] GET /api/trips
+[2026-05-10T09:12:17.232Z] GET /api/trips
+[2026-05-10T09:12:20.529Z] GET /api/trips
+[2026-05-10T09:12:33.701Z] GET /api/trips
+[2026-05-10T09:12:37.926Z] GET /api/trips
+[2026-05-10T09:13:02.752Z] GET /api/trips
+[2026-05-10T09:13:05.967Z] GET /api/trips
+[2026-05-10T09:13:09.261Z] GET /api/trips
+[2026-05-10T09:13:11.931Z] GET /api/trips
+[2026-05-10T09:13:14.873Z] GET /api/trips
+[2026-05-10T09:13:17.136Z] GET /api/trips
+[2026-05-10T09:13:29.827Z] GET /api/trips
+[2026-05-10T09:13:33.334Z] GET /api/trips
+[2026-05-10T09:14:34.925Z] GET /api/trips
+[2026-05-10T09:14:37.130Z] GET /api/trips
+[2026-05-10T09:16:28.050Z] GET /api/trips
+[2026-05-10T09:17:48.674Z] GET /api/trips
