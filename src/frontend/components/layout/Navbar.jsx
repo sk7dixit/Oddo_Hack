@@ -3,25 +3,14 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
-    <nav style={{
-      height: "64px",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "space-between",
-      padding: "0 40px",
-      background: "white",
-      boxShadow: "0 2px 4px rgba(0,0,0,0.05)",
-      position: "sticky",
-      top: 0,
-      zIndex: 100
-    }}>
-      <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-        <div style={{ width: "32px", height: "32px", background: "#007bff", borderRadius: "8px" }}></div>
-        <span style={{ fontSize: "1.5rem", fontWeight: "bold", color: "#007bff" }}>Traveloop</span>
+    <nav className="h-16 flex items-center justify-between px-10 bg-white shadow-sm sticky top-0 z-50">
+      <div className="flex items-center gap-2">
+        <div className="w-8 h-8 bg-blue-600 rounded-lg"></div>
+        <span className="text-xl font-bold text-blue-600">Traveloop</span>
       </div>
-      <div style={{ display: "flex", gap: "30px" }}>
-        <Link to="/" style={{ textDecoration: "none", color: "#666", fontWeight: "500" }}>Dashboard</Link>
-        <Link to="/profile" style={{ textDecoration: "none", color: "#666", fontWeight: "500" }}>Profile</Link>
+      <div className="flex gap-8">
+        <Link to="/" className="text-gray-600 hover:text-blue-600 font-medium transition-colors">Dashboard</Link>
+        <Link to="/profile" className="text-gray-600 hover:text-blue-600 font-medium transition-colors">Profile</Link>
       </div>
     </nav>
   );
