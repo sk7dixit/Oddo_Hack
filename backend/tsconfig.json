@@ -1,11 +1,17 @@
 {
   "compilerOptions": {
+<<<<<<< HEAD
     "target": "es2022",
     "module": "commonjs",
+=======
+    "target": "ES2022",
+    "module": "CommonJS",
+>>>>>>> origin/admin-feature
     "moduleResolution": "node",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
+<<<<<<< HEAD
     "skipLibCheck": true,
     "outDir": "./dist",
     "rootDir": "./src",
@@ -18,3 +24,8 @@
     "node_modules"
   ]
 }
+=======
+    "skipLibCheck": true
+  }
+}
+>>>>>>> origin/admin-feature

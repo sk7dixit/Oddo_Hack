@@ -20,6 +20,7 @@
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
 <<<<<<< HEAD
+<<<<<<< HEAD
     "noFallthroughCasesInSwitch": true
 =======
     "noFallthroughCasesInSwitch": true,
@@ -30,6 +31,9 @@
     }
 
 >>>>>>> origin/auth-feature
+=======
+    "noFallthroughCasesInSwitch": true
+>>>>>>> origin/admin-feature
   },
   "include": ["src"]
 }

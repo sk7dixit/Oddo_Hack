@@ -1,14 +1,17 @@
-import { Router } from 'express';
-import { getStats, getAllUsers, getAllTrips, getTopCities } from '../controllers/adminController';
-import { protect } from '../middleware/authMiddleware';
+import express from "express";
+import { adminLogin, getDashboardStats, getAllUsers, deleteUser, getAllTrips, deleteTrip, getAnalyticsData, getAdminProfile, updateAdminProfile } from "../controllers/adminController";
+import { verifyAdmin } from "../middleware/adminMiddleware";
 
-const router = Router();
+const router = express.Router();
 
-router.use(protect);
-
-router.get('/stats', getStats);
-router.get('/users', getAllUsers);
-router.get('/trips', getAllTrips);
-router.get('/top-cities', getTopCities);
+router.post("/login", adminLogin);
+router.get("/stats", verifyAdmin, getDashboardStats);
+router.get("/users", verifyAdmin, getAllUsers);
+router.delete("/users/:id", verifyAdmin, deleteUser);
+router.get("/trips", verifyAdmin, getAllTrips);
+router.delete("/trips/:id", verifyAdmin, deleteTrip);
+router.get("/analytics", verifyAdmin, getAnalyticsData);
+router.get("/profile", verifyAdmin, getAdminProfile);
+router.put("/profile", verifyAdmin, updateAdminProfile);
 
 export default router;
