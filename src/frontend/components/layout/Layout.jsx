@@ -2,29 +2,27 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
 
-const Layout = () => {
+export default function Layout() {
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col font-sans text-slate-900">
-      {/* SaaS Top Navigation */}
+    <div className="min-h-screen flex flex-col font-sans selection:bg-blue-600 selection:text-white">
+      {/* Immersive Top Navigation */}
       <Navbar />
 
-      {/* Main Responsive Content Stage */}
-      <main className="flex-1 w-full max-w-7xl mx-auto px-6 py-12 lg:py-16">
+      {/* Main Content Stage */}
+      <main className="flex-1 w-full max-w-7xl mx-auto px-6 pt-32 pb-20">
         <Outlet />
       </main>
       
-      {/* Minimal Footer */}
-      <footer className="py-10 border-t border-slate-100 bg-white">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-3 grayscale opacity-30">
-            <div className="w-8 h-8 bg-slate-800 rounded-xl flex items-center justify-center text-white text-xs">✈️</div>
-            <span className="text-sm font-black tracking-tighter text-slate-800 uppercase">Traveloop</span>
+      {/* Minimalistic Glass Footer */}
+      <footer className="py-12 border-t border-white/5">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="flex items-center gap-4 grayscale opacity-20">
+            <div className="w-10 h-10 bg-white/10 rounded-2xl flex items-center justify-center text-white text-sm">✈️</div>
+            <span className="text-lg font-black tracking-tighter text-white uppercase">Traveloop</span>
           </div>
-          <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest">© 2026 Traveloop AI • Hackathon Edition</p>
+          <p className="text-[10px] font-black text-white/20 uppercase tracking-[0.5em]">© 2026 Traveloop AI • Digital Companion</p>
         </div>
       </footer>
     </div>
   );
-};
-
-export default Layout;
+}

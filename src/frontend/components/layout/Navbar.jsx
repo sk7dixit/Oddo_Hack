@@ -1,43 +1,39 @@
 import React from "react";
-import GradientNav from "../ui/GradientNav";
+import { Link } from "react-router-dom";
+import FloatingDock from "../ui/FloatingDock";
 
-const Navbar = () => {
+export default function Navbar() {
   return (
-    <header className="bg-white/80 backdrop-blur-xl border-b border-slate-100 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto h-24 px-6 flex items-center justify-between">
+    <header className="fixed top-0 left-0 w-full z-50 transition-all duration-500">
+      <div className="max-w-7xl mx-auto h-24 px-8 flex items-center justify-between">
         
-        {/* Left Section: Branding */}
-        <div className="flex items-center gap-10">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-blue-600 flex items-center justify-center text-white text-xl shadow-lg shadow-blue-100">
-              ✈️
-            </div>
-            <h1 className="text-2xl font-black text-slate-800 tracking-tighter">Traveloop</h1>
+        <Link to="/" className="flex items-center gap-3 group transition-transform active:scale-95">
+          <div className="w-12 h-12 rounded-[1.25rem] bg-white/10 backdrop-blur-3xl border border-white/20 flex items-center justify-center text-white text-xl shadow-2xl group-hover:bg-blue-600 transition-all duration-500">
+            ✈️
           </div>
+          <h1 className="text-2xl font-black text-white tracking-tighter drop-shadow-sm">Traveloop</h1>
+        </Link>
 
-          {/* Animated Navigation Pills */}
-          <div className="hidden lg:block">
-            <GradientNav />
-          </div>
+        <div className="hidden lg:block">
+          <FloatingDock />
         </div>
 
-        {/* Right Section: Actions & Account */}
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2 pr-4 border-r border-slate-100">
-            <button className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400 hover:bg-slate-100 hover:text-slate-600 transition-all border border-slate-100">
+        <div className="flex items-center gap-6">
+          <div className="flex items-center gap-2">
+            <button className="w-11 h-11 rounded-full bg-white/5 hover:bg-white/10 backdrop-blur-xl border border-white/10 flex items-center justify-center text-white/40 hover:text-white transition-all">
               🔔
             </button>
-            <button className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400 hover:bg-slate-100 hover:text-slate-600 transition-all border border-slate-100">
+            <button className="w-11 h-11 rounded-full bg-white/5 hover:bg-white/10 backdrop-blur-xl border border-white/10 flex items-center justify-center text-white/40 hover:text-white transition-all">
               ⚙️
             </button>
           </div>
           
-          <div className="flex items-center gap-3 pl-2">
+          <div className="flex items-center gap-4 pl-4 border-l border-white/10">
             <div className="text-right hidden sm:block">
-               <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest leading-none mb-1">Explorer</p>
-               <p className="text-sm font-black text-slate-800 leading-none">Traveloop User</p>
+               <p className="text-[9px] font-black text-white/20 uppercase tracking-widest leading-none mb-1">Status: Active</p>
+               <p className="text-xs font-black text-white leading-none">Traveler</p>
             </div>
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center font-black shadow-lg shadow-blue-100">
+            <div className="w-11 h-11 rounded-[1.2rem] bg-gradient-to-tr from-blue-600 to-indigo-600 border border-white/20 flex items-center justify-center font-black text-white text-[10px] shadow-2xl hover:scale-105 transition-transform cursor-pointer">
               U
             </div>
           </div>
@@ -46,6 +42,4 @@ const Navbar = () => {
       </div>
     </header>
   );
-};
-
-export default Navbar;
+}
