@@ -29,19 +29,18 @@ const items = [
 
 export default function FloatingDock() {
   return (
-    <div className="flex items-center gap-3">
+    <div className="flex items-center gap-2 p-1.5 bg-white/5 backdrop-blur-3xl rounded-full border border-white/10 shadow-2xl">
       {items.map((item, index) => (
         <NavLink
           key={index}
           to={item.path}
           className={({ isActive }) => `
-            relative group flex items-center h-14 w-14 hover:w-44 
+            relative group flex items-center h-11 w-11 hover:w-36 
             rounded-full transition-all duration-500 overflow-hidden 
-            bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-50
-            ${isActive ? "ring-2 ring-blue-500 ring-offset-2 shadow-blue-100" : ""}
+            ${isActive ? "bg-white/10 shadow-lg" : "bg-transparent"}
           `}
         >
-          {/* Gradient Background Layer */}
+          {/* Active/Hover Gradient Layer */}
           <div
             className={`
               absolute inset-0 bg-gradient-to-r ${item.color}
@@ -53,19 +52,19 @@ export default function FloatingDock() {
           <div
             className="
               relative z-10 flex items-center justify-center 
-              min-w-[56px] text-2xl text-slate-600
+              min-w-[44px] text-lg text-white/50
               group-hover:text-white transition-all duration-500
             "
           >
             {item.icon}
           </div>
 
-          {/* Hidden Label Stage */}
+          {/* Label Stage */}
           <span
             className="
-              relative z-10 whitespace-nowrap text-white font-black text-xs uppercase tracking-widest
-              opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0
-              transition-all duration-500 pr-6
+              relative z-10 whitespace-nowrap text-white font-bold text-[10px] uppercase tracking-widest
+              opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0
+              transition-all duration-500 pr-5
             "
           >
             {item.title}
