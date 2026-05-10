@@ -30,3 +30,5 @@ cd backend && npm install && npm run dev
 4. Use REST API naming conventions
 5. Do NOT modify another member's folders
 6. Push only to your assigned branch
+# Oddo_Hack
+For Hackathon Purpose 
