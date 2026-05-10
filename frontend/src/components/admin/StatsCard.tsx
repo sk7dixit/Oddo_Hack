@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import type { Variants } from "framer-motion";
 import type { LucideIcon } from "lucide-react";
 
 interface Props {
@@ -11,12 +12,15 @@ interface Props {
   isSpecial?: boolean;
 }
 
-const cardVariants = {
+const cardVariants: Variants = {
   hidden: { opacity: 0, y: 12 },
   visible: { 
     opacity: 1, 
     y: 0,
-    transition: { duration: 0.4, ease: "easeOut" }
+    transition: { 
+      duration: 0.4, 
+      ease: "easeOut" 
+    }
   }
 };
 
@@ -33,18 +37,15 @@ const StatsCard = ({
     return (
       <motion.div
         variants={cardVariants}
-        whileHover={{ y: -4, boxShadow: "0 10px 30px rgba(0,0,0,0.08)" }}
+        whileHover={{ y: -4, boxShadow: "0 12px 30px rgba(0,0,0,0.12)" }}
         className="
           bg-gradient-to-br
-          from-violet-500
-          to-fuchsia-500
+          from-[#8B5CF6]
+          to-[#D946EF]
           text-white
           rounded-2xl
           p-5
           shadow-[0_4px_20px_rgba(0,0,0,0.04)]
-          transition-all
-          duration-300
-          active:scale-[0.98]
           cursor-default
           relative
           overflow-hidden
@@ -100,7 +101,7 @@ const StatsCard = ({
   return (
     <motion.div
       variants={cardVariants}
-      whileHover={{ y: -4, boxShadow: "0 10px 30px rgba(0,0,0,0.08)" }}
+      whileHover={{ y: -4, boxShadow: "0 12px 30px rgba(0,0,0,0.08)" }}
       className="
         bg-white
         rounded-2xl
@@ -108,9 +109,6 @@ const StatsCard = ({
         border
         border-[#E5E7EB]
         shadow-[0_4px_20px_rgba(0,0,0,0.04)]
-        transition-all
-        duration-300
-        active:scale-[0.98]
         cursor-default
       "
     >
