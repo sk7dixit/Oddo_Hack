@@ -2,8 +2,8 @@ import React from 'react';
 
 const TripsChart: React.FC = () => {
   return (
-    <div>
-      <h1>TripsChart</h1>
+    <div className="trips-chart">
+      {/* Trips chart goes here */}
     </div>
   );
 };

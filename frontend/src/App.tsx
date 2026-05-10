@@ -1,111 +1,122 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import './App.css';
-import DashboardPage from './pages/ui/DashboardPage';
-import MyTripsPage from './pages/trips/MyTripsPage';
-import CreateTripPage from './pages/trips/CreateTripPage';
-import TripDetailsPage from './pages/trips/TripDetailsPage';
-import ProfilePage from './pages/auth/ProfilePage';
-import ProfileAvatar from './components/auth/ProfileAvatar';
-import ProfileMenu from './components/auth/ProfileMenu';
-import { useUser } from './hooks/useUser';
+import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from './assets/vite.svg'
+import heroImg from './assets/hero.png'
+import './App.css'
 
-const App = () => {
-  const { user } = useUser();
+function App() {
+  const [count, setCount] = useState(0)
 
   return (
-    <Router>
-      <div className="app">
-        {/* Horizontal Header */}
-        <header className="header">
-          <div style={{ display: 'flex', alignItems: 'center', gap: '40px' }}>
-            <Link to="/" className="logo" style={{ 
-              fontSize: '1.6rem', 
-              fontWeight: 800, 
-              fontFamily: 'Outfit',
-              color: '#fff',
-              textDecoration: 'none',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '12px',
-              letterSpacing: '-0.02em'
-            }}>
-              <div style={{ 
-                width: '44px', 
-                height: '44px', 
-                borderRadius: '12px', 
-                background: '#4169e1', 
-                color: 'white', 
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'center', 
-                fontSize: '1.4rem',
-                boxShadow: '0 4px 15px rgba(65, 105, 225, 0.4)'
-              }}>
-                ✈️
-              </div>
-              <span style={{ background: 'linear-gradient(to right, #fff, rgba(255,255,255,0.6))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-                TRAVELOOP
-              </span>
-            </Link>
+    <>
+      <section id="center">
+        <div className="hero">
+          <img src={heroImg} className="base" width="170" height="179" alt="" />
+          <img src={reactLogo} className="framework" alt="React logo" />
+          <img src={viteLogo} className="vite" alt="Vite logo" />
+        </div>
+        <div>
+          <h1>Get started</h1>
+          <p>
+            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
+          </p>
+        </div>
+        <button
+          type="button"
+          className="counter"
+          onClick={() => setCount((count) => count + 1)}
+        >
+          Count is {count}
+        </button>
+      </section>
 
-            <nav className="nav-menu" style={{ background: 'rgba(255, 255, 255, 0.05)', backdropFilter: 'blur(10px)' }}>
-              <Link to="/" className="nav-item active">
-                <span className="nav-icon">🏠</span>
-                <span>Overview</span>
-              </Link>
-              <Link to="/trips" className="nav-item">
-                <span className="nav-icon">✈️</span>
-                <span>My Trips</span>
-              </Link>
-              <Link to="/profile" className="nav-item">
-                <span className="nav-icon">👤</span>
-                <span>Profile</span>
-              </Link>
-            </nav>
-          </div>
+      <div className="ticks"></div>
 
-          <div className="header-right" style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
-            {user && (
-              <Link to="/profile" className="user-profile animate-fade-in" style={{ display: 'flex', alignItems: 'center', gap: '14px', textDecoration: 'none' }}>
-                <div style={{ textAlign: 'right' }}>
-                  <p style={{ fontSize: '0.9rem', fontWeight: 800, color: '#fff' }}>{user.name}</p>
-                  <p style={{ fontSize: '0.7rem', color: '#4169e1', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Explorer Member</p>
-                </div>
-                <div style={{ position: 'relative' }}>
-                  <img 
-                    src={user.avatar || 'https://i.pravatar.cc/150?u=traveloop'} 
-                    alt="Avatar" 
-                    style={{ 
-                      width: '44px', 
-                      height: '44px', 
-                      borderRadius: '14px', 
-                      border: '2px solid rgba(255,255,255,0.1)',
-                      padding: '2px'
-                    }} 
-                  />
-                  <div style={{ position: 'absolute', bottom: '-2px', right: '-2px', width: '12px', height: '12px', background: '#10b981', border: '2px solid #0b0f1a', borderRadius: '50%' }} />
-                </div>
-              </Link>
-            )}
-          </div>
-        </header>
+      <section id="next-steps">
+        <div id="docs">
+          <svg className="icon" role="presentation" aria-hidden="true">
+            <use href="/icons.svg#documentation-icon"></use>
+          </svg>
+          <h2>Documentation</h2>
+          <p>Your questions, answered</p>
+          <ul>
+            <li>
+              <a href="https://vite.dev/" target="_blank">
+                <img className="logo" src={viteLogo} alt="" />
+                Explore Vite
+              </a>
+            </li>
+            <li>
+              <a href="https://react.dev/" target="_blank">
+                <img className="button-icon" src={reactLogo} alt="" />
+                Learn more
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div id="social">
+          <svg className="icon" role="presentation" aria-hidden="true">
+            <use href="/icons.svg#social-icon"></use>
+          </svg>
+          <h2>Connect with us</h2>
+          <p>Join the Vite community</p>
+          <ul>
+            <li>
+              <a href="https://github.com/vitejs/vite" target="_blank">
+                <svg
+                  className="button-icon"
+                  role="presentation"
+                  aria-hidden="true"
+                >
+                  <use href="/icons.svg#github-icon"></use>
+                </svg>
+                GitHub
+              </a>
+            </li>
+            <li>
+              <a href="https://chat.vite.dev/" target="_blank">
+                <svg
+                  className="button-icon"
+                  role="presentation"
+                  aria-hidden="true"
+                >
+                  <use href="/icons.svg#discord-icon"></use>
+                </svg>
+                Discord
+              </a>
+            </li>
+            <li>
+              <a href="https://x.com/vite_js" target="_blank">
+                <svg
+                  className="button-icon"
+                  role="presentation"
+                  aria-hidden="true"
+                >
+                  <use href="/icons.svg#x-icon"></use>
+                </svg>
+                X.com
+              </a>
+            </li>
+            <li>
+              <a href="https://bsky.app/profile/vite.dev" target="_blank">
+                <svg
+                  className="button-icon"
+                  role="presentation"
+                  aria-hidden="true"
+                >
+                  <use href="/icons.svg#bluesky-icon"></use>
+                </svg>
+                Bluesky
+              </a>
+            </li>
+          </ul>
+        </div>
+      </section>
 
-        {/* Main Content Area */}
-        <main className="main-content">
-          <div className="page-content" style={{ padding: '40px' }}>
-            <Routes>
-              <Route path="/" element={<DashboardPage />} />
-              <Route path="/trips" element={<MyTripsPage />} />
-              <Route path="/trips/create" element={<CreateTripPage />} />
-              <Route path="/trips/:id" element={<TripDetailsPage />} />
-              <Route path="/profile" element={<ProfilePage />} />
-            </Routes>
-          </div>
-        </main>
-      </div>
-    </Router>
-  );
+      <div className="ticks"></div>
+      <section id="spacer"></section>
+    </>
+  )
 }
 
-export default App;
+export default App

@@ -3,7 +3,7 @@ import React from 'react';
 const ItineraryBuilderPage: React.FC = () => {
   return (
     <div>
-      <h1>ItineraryBuilderPage</h1>
+      <h2>Itinerary Builder</h2>
     </div>
   );
 };

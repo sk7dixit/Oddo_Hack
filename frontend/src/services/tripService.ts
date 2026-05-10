@@ -1,27 +1,28 @@
-import api from './api';
-import type { Trip, CreateTripInput } from '../types/trip';
+import axios from 'axios';
 
-export const tripService = {
-  getTrips: async (): Promise<Trip[]> => {
-    const response = await api.get('/trips');
-    return response.data;
-  },
+const API_URL = '/api/trips';
 
-  getTripById: async (id: string): Promise<Trip> => {
-    const response = await api.get(`/trips/${id}`);
-    return response.data;
-  },
+export const getAllTrips = async () => {
+  const response = await axios.get(API_URL);
+  return response.data;
+};
 
-  createTrip: async (data: CreateTripInput): Promise<Trip> => {
-    const response = await api.post('/trips', data);
-    return response.data;
-  },
+export const getTripById = async (id: string) => {
+  const response = await axios.get(`${API_URL}/${id}`);
+  return response.data;
+};
 
-  updateTrip: async (id: string, data: Partial<CreateTripInput>): Promise<void> => {
-    await api.put(`/trips/${id}`, data);
-  },
+export const createTrip = async (data: object) => {
+  const response = await axios.post(API_URL, data);
+  return response.data;
+};
 
-  deleteTrip: async (id: string): Promise<void> => {
-    await api.delete(`/trips/${id}`);
-  }
+export const updateTrip = async (id: string, data: object) => {
+  const response = await axios.put(`${API_URL}/${id}`, data);
+  return response.data;
+};
+
+export const deleteTrip = async (id: string) => {
+  const response = await axios.delete(`${API_URL}/${id}`);
+  return response.data;
 };

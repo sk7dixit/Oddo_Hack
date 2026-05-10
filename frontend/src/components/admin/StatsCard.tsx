@@ -1,9 +1,15 @@
 import React from 'react';
 
-const StatsCard: React.FC = () => {
+interface StatsCardProps {
+  label: string;
+  value: number | string;
+}
+
+const StatsCard: React.FC<StatsCardProps> = ({ label, value }) => {
   return (
-    <div>
-      <h1>StatsCard</h1>
+    <div className="stats-card">
+      <h4>{label}</h4>
+      <p>{value}</p>
     </div>
   );
 };

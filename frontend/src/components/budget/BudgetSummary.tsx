@@ -1,9 +1,18 @@
 import React from 'react';
 
-const BudgetSummary: React.FC = () => {
+interface BudgetSummaryProps {
+  total: number;
+  spent: number;
+  remaining: number;
+  currency?: string;
+}
+
+const BudgetSummary: React.FC<BudgetSummaryProps> = ({ total, spent, remaining, currency = 'INR' }) => {
   return (
-    <div>
-      <h1>BudgetSummary</h1>
+    <div className="budget-summary">
+      <p>Total: {currency} {total.toLocaleString()}</p>
+      <p>Spent: {currency} {spent.toLocaleString()}</p>
+      <p>Remaining: {currency} {remaining.toLocaleString()}</p>
     </div>
   );
 };

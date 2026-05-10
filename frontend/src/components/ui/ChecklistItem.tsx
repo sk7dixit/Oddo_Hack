@@ -1,9 +1,16 @@
 import React from 'react';
 
-const ChecklistItem: React.FC = () => {
+interface ChecklistItemProps {
+  label: string;
+  checked: boolean;
+  onToggle: () => void;
+}
+
+const ChecklistItem: React.FC<ChecklistItemProps> = ({ label, checked, onToggle }) => {
   return (
-    <div>
-      <h1>ChecklistItem</h1>
+    <div className="checklist-item" onClick={onToggle}>
+      <input type="checkbox" checked={checked} onChange={onToggle} />
+      <span style={{ textDecoration: checked ? 'line-through' : 'none' }}>{label}</span>
     </div>
   );
 };

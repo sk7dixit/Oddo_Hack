@@ -1,9 +1,19 @@
 import React from 'react';
 
-const CitySelector: React.FC = () => {
+interface CitySelectorProps {
+  value: string;
+  onChange: (city: string) => void;
+}
+
+const CitySelector: React.FC<CitySelectorProps> = ({ value, onChange }) => {
   return (
-    <div>
-      <h1>CitySelector</h1>
+    <div className="city-selector">
+      <input
+        type="text"
+        value={value}
+        placeholder="Search city..."
+        onChange={(e) => onChange(e.target.value)}
+      />
     </div>
   );
 };

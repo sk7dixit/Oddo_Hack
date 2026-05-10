@@ -1,75 +1,48 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-// Global Error Handlers
-process.on("uncaughtException", (err) => {
-  console.error("UNCAUGHT EXCEPTION:", err);
-});
-
-process.on("unhandledRejection", (err) => {
-  console.error("UNHANDLED REJECTION:", err);
-});
-
 import express from 'express';
 import cors from 'cors';
-import fs from 'fs';
-import path from 'path';
-import userRoutes from './routes/userRoutes.js';
-import tripRoutes from './routes/tripRoutes.js';
-// import authRoutes from './routes/authRoutes.js';
-// import budgetRoutes from './routes/budgetRoutes.js';
-// import adminRoutes from './routes/adminRoutes.js';
-// import notesRoutes from './routes/notesRoutes.js';
-// import checklistRoutes from './routes/checklistRoutes.js';
+import { sql } from './config/db';
 
-const logFile = path.join(process.cwd(), 'debug.log');
-const logStream = fs.createWriteStream(logFile, { flags: 'a' });
-
-const log = (msg: string) => {
-  const entry = `[${new Date().toISOString()}] ${msg}\n`;
-  console.log(msg);
-  logStream.write(entry);
-};
-
+import webhookRoutes from './routes/webhookRoutes';
+import authRoutes from './routes/authRoutes';
+import { clerkMiddleware } from '@clerk/express';
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Request Logging Middleware
-app.use((req, res, next) => {
-  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
-  next();
-});
-
-// Middleware
 app.use(cors());
+
+// Webhook route needs raw body parser, so it must come BEFORE express.json()
+app.use('/api/webhooks', webhookRoutes);
+
+// Global middleware for parsing JSON bodies
 app.use(express.json());
 
-app.use((req, res, next) => {
-  log(`${req.method} ${req.url}`);
-  next();
+// Add clerk middleware
+app.use(clerkMiddleware());
+
+// Mount auth routes
+app.use('/api/auth', authRoutes);
+
+app.get('/', (_req, res) => {
+  res.json({ message: 'Traveloop API is running.' });
 });
 
-// Routes
-// app.use('/api/auth', authRoutes);
-app.use('/api/user', userRoutes);
-app.use('/api/trips', tripRoutes);
-// app.use('/api/budget', budgetRoutes);
-// app.use('/api/admin', adminRoutes);
-// app.use('/api/notes', notesRoutes);
-// app.use('/api/checklist', checklistRoutes);
-
-// Error Handler
-app.use((err: any, req: any, res: any, next: any) => {
-  log(`GLOBAL ERROR: ${err.stack || err}`);
-  res.status(500).json({ error: err.message || 'Internal server error' });
+// Test database connection
+app.get('/api/db-version', async (_req, res) => {
+  try {
+    const result = await sql`SELECT version()`;
+    const { version } = result[0];
+    res.json({ version });
+  } catch (error) {
+    console.error('Database connection error:', error);
+    res.status(500).json({ error: 'Database connection failed' });
+  }
 });
 
-// Base route
-app.get('/', (req, res) => {
-  res.send('Traveloop API is running');
-});
-
-// Start Server
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
+
+export default app;

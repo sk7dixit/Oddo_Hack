@@ -1,9 +1,18 @@
 import React from 'react';
 
-const StopCard: React.FC = () => {
+interface StopCardProps {
+  city: string;
+  arrivalDate: string;
+  departureDate: string;
+  notes?: string;
+}
+
+const StopCard: React.FC<StopCardProps> = ({ city, arrivalDate, departureDate, notes }) => {
   return (
-    <div>
-      <h1>StopCard</h1>
+    <div className="stop-card">
+      <h4>{city}</h4>
+      <p>{arrivalDate} – {departureDate}</p>
+      {notes && <p>{notes}</p>}
     </div>
   );
 };

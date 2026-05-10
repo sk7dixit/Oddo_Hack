@@ -4,7 +4,11 @@ import "dotenv/config";
 import { defineConfig } from "prisma/config";
 
 export default defineConfig({
+<<<<<<< HEAD
   schema: "src/prisma/schema.prisma",
+=======
+  schema: "prisma/schema.prisma",
+>>>>>>> origin/auth-feature
   migrations: {
     path: "prisma/migrations",
   },

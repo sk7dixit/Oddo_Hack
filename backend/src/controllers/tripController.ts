@@ -1,86 +1,51 @@
-import type { Request, Response } from 'express';
-import { tripService } from '../services/tripService.js';
-import prisma from '../config/prisma.js';
+import { Request, Response } from 'express';
 
-// Helper to get userId (in real app, this comes from auth middleware)
-const MOCK_USER_ID = 'u1'; 
-
-const ensureMockUser = async () => {
-  const user = await prisma.user.findUnique({ where: { id: MOCK_USER_ID } });
-  if (!user) {
-    await prisma.user.create({
-      data: {
-        id: MOCK_USER_ID,
-        email: 'explorer.pro@traveloop.com',
-        name: 'Explorer Pro',
-      }
-    });
+export const getAllTrips = async (_req: Request, res: Response): Promise<void> => {
+  try {
+    // TODO: fetch all trips for user
+    res.status(200).json([]);
+  } catch (error) {
+    res.status(500).json({ message: 'Internal server error' });
   }
 };
 
-import fs from 'fs';
-import path from 'path';
-
-const logError = (error: any) => {
-  const logMsg = `[${new Date().toISOString()}] DATABASE ERROR: ${JSON.stringify(error, Object.getOwnPropertyNames(error))}\n`;
-  fs.appendFileSync(path.join(process.cwd(), 'error.log'), logMsg);
+export const getTripById = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params;
+    // TODO: fetch trip by id
+    res.status(200).json({ id });
+  } catch (error) {
+    res.status(500).json({ message: 'Internal server error' });
+  }
 };
 
-export const tripController = {
-  getAllTrips: async (req: Request, res: Response) => {
-    try {
-      await ensureMockUser();
-      const trips = await tripService.getAllTrips(MOCK_USER_ID);
-      res.status(200).json(trips);
-    } catch (error: any) {
-      logError(error);
-      console.error("Trip Fetch Error:", error);
-      res.status(500).json({ error: 'Failed to fetch trips' });
-    }
-  },
+export const createTrip = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const data = req.body;
+    // TODO: create trip in DB
+    res.status(201).json({ message: 'Trip created', data });
+  } catch (error) {
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
 
-  getTripById: async (req: Request<{ id: string }>, res: Response) => {
-    try {
-      await ensureMockUser();
-      const trip = await tripService.getTripById(req.params.id, MOCK_USER_ID);
-      if (!trip) return res.status(404).json({ error: 'Trip not found' });
-      res.status(200).json(trip);
-    } catch (error) {
-      console.error("Trip Details Fetch Error:", error);
-      res.status(500).json({ error: 'Failed to fetch trip details' });
-    }
-  },
+export const updateTrip = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params;
+    const data = req.body;
+    // TODO: update trip in DB
+    res.status(200).json({ message: 'Trip updated', id, data });
+  } catch (error) {
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
 
-  createTrip: async (req: Request, res: Response) => {
-    try {
-      await ensureMockUser();
-      const trip = await tripService.createTrip(MOCK_USER_ID, req.body);
-      res.status(201).json(trip);
-    } catch (error: any) {
-      console.error("Trip Create Error:", error);
-      res.status(500).json({ error: 'Failed to create trip' });
-    }
-  },
-
-  updateTrip: async (req: Request<{ id: string }>, res: Response) => {
-    try {
-      await ensureMockUser();
-      await tripService.updateTrip(req.params.id, MOCK_USER_ID, req.body);
-      res.status(200).json({ message: 'Trip updated successfully' });
-    } catch (error) {
-      console.error("Trip Update Error:", error);
-      res.status(500).json({ error: 'Failed to update trip' });
-    }
-  },
-
-  deleteTrip: async (req: Request<{ id: string }>, res: Response) => {
-    try {
-      await ensureMockUser();
-      await tripService.deleteTrip(req.params.id, MOCK_USER_ID);
-      res.status(200).json({ message: 'Trip deleted successfully' });
-    } catch (error) {
-      console.error("Trip Delete Error:", error);
-      res.status(500).json({ error: 'Failed to delete trip' });
-    }
+export const deleteTrip = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params;
+    // TODO: delete trip from DB
+    res.status(200).json({ message: 'Trip deleted', id });
+  } catch (error) {
+    res.status(500).json({ message: 'Internal server error' });
   }
 };

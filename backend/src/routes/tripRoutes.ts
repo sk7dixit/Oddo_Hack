@@ -1,21 +1,15 @@
 import { Router } from 'express';
-import { tripController } from '../controllers/tripController.js';
+import { getAllTrips, getTripById, createTrip, updateTrip, deleteTrip } from '../controllers/tripController';
+import { protect } from '../middleware/authMiddleware';
 
 const router = Router();
 
-// GET /api/trips
-router.get('/', tripController.getAllTrips);
+router.use(protect);
 
-// GET /api/trips/:id
-router.get('/:id', tripController.getTripById);
-
-// POST /api/trips
-router.post('/', tripController.createTrip);
-
-// PUT /api/trips/:id
-router.put('/:id', tripController.updateTrip);
-
-// DELETE /api/trips/:id
-router.delete('/:id', tripController.deleteTrip);
+router.get('/', getAllTrips);
+router.get('/:id', getTripById);
+router.post('/', createTrip);
+router.put('/:id', updateTrip);
+router.delete('/:id', deleteTrip);
 
 export default router;

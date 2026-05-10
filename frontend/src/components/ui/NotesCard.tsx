@@ -1,9 +1,17 @@
 import React from 'react';
 
-const NotesCard: React.FC = () => {
+interface NotesCardProps {
+  title: string;
+  content: string;
+  updatedAt: string;
+}
+
+const NotesCard: React.FC<NotesCardProps> = ({ title, content, updatedAt }) => {
   return (
-    <div>
-      <h1>NotesCard</h1>
+    <div className="notes-card">
+      <h4>{title}</h4>
+      <p>{content}</p>
+      <small>Updated: {updatedAt}</small>
     </div>
   );
 };

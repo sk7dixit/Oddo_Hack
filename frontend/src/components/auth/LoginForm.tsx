@@ -2,9 +2,10 @@ import React from 'react';
 
 const LoginForm: React.FC = () => {
   return (
-    <div>
-      <h1>LoginForm</h1>
-    </div>
+    <form>
+      <h2>Login</h2>
+      {/* Login form fields */}
+    </form>
   );
 };
 

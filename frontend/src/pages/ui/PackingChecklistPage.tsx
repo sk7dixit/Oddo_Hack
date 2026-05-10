@@ -3,7 +3,7 @@ import React from 'react';
 const PackingChecklistPage: React.FC = () => {
   return (
     <div>
-      <h1>PackingChecklistPage</h1>
+      <h2>Packing Checklist</h2>
     </div>
   );
 };

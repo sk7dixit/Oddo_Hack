@@ -1,9 +1,16 @@
 import React from 'react';
 
-const ExpenseCard: React.FC = () => {
+interface ExpenseCardProps {
+  category: string;
+  amount: number;
+  currency?: string;
+}
+
+const ExpenseCard: React.FC<ExpenseCardProps> = ({ category, amount, currency = 'INR' }) => {
   return (
-    <div>
-      <h1>ExpenseCard</h1>
+    <div className="expense-card">
+      <h4>{category}</h4>
+      <p>{currency} {amount.toLocaleString()}</p>
     </div>
   );
 };

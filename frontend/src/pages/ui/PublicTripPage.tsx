@@ -3,7 +3,7 @@ import React from 'react';
 const PublicTripPage: React.FC = () => {
   return (
     <div>
-      <h1>PublicTripPage</h1>
+      <h2>Public Trip</h2>
     </div>
   );
 };

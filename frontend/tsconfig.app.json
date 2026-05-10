@@ -19,7 +19,17 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
+<<<<<<< HEAD
     "noFallthroughCasesInSwitch": true
+=======
+    "noFallthroughCasesInSwitch": true,
+    "baseUrl": ".",
+    "ignoreDeprecations": "6.0",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+
+>>>>>>> origin/auth-feature
   },
   "include": ["src"]
 }

@@ -1,10 +1,16 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Sidebar: React.FC = () => {
   return (
-    <div>
-      <h1>Sidebar</h1>
-    </div>
+    <aside className="sidebar">
+      <ul>
+        <li><Link to="/trips">Trips</Link></li>
+        <li><Link to="/budget">Budget</Link></li>
+        <li><Link to="/checklist">Checklist</Link></li>
+        <li><Link to="/notes">Notes</Link></li>
+      </ul>
+    </aside>
   );
 };
 

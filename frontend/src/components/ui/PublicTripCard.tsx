@@ -1,9 +1,17 @@
 import React from 'react';
 
-const PublicTripCard: React.FC = () => {
+interface PublicTripCardProps {
+  title: string;
+  destination: string;
+  author: string;
+}
+
+const PublicTripCard: React.FC<PublicTripCardProps> = ({ title, destination, author }) => {
   return (
-    <div>
-      <h1>PublicTripCard</h1>
+    <div className="public-trip-card">
+      <h3>{title}</h3>
+      <p>{destination}</p>
+      <small>By {author}</small>
     </div>
   );
 };

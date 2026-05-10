@@ -1,55 +1,19 @@
-import prisma from '../config/prisma.js';
-import type { TripStatus } from '@prisma/client';
-
-export interface CreateTripDTO {
-  title: string;
-  description?: string;
-  startDate: string;
-  endDate: string;
-  status?: TripStatus;
-  image?: string;
-}
+// TODO: Implement trip service logic
 
 export const tripService = {
-  getAllTrips: async (userId: string) => {
-    return await prisma.trip.findMany({
-      where: { userId },
-      orderBy: { createdAt: 'desc' }
-    });
+  getAll: async (userId: string) => {
+    // TODO: query DB for user's trips
   },
-
-  getTripById: async (id: string, userId: string) => {
-    return await prisma.trip.findFirst({
-      where: { id, userId },
-      include: { stops: { include: { city: true } } }
-    });
+  getById: async (id: string) => {
+    // TODO: query DB for trip by id
   },
-
-  createTrip: async (userId: string, data: CreateTripDTO) => {
-    return await prisma.trip.create({
-      data: {
-        ...data,
-        startDate: new Date(data.startDate),
-        endDate: new Date(data.endDate),
-        userId
-      }
-    });
+  create: async (data: object) => {
+    // TODO: insert trip into DB
   },
-
-  updateTrip: async (id: string, userId: string, data: Partial<CreateTripDTO>) => {
-    return await prisma.trip.updateMany({
-      where: { id, userId },
-      data: {
-        ...data,
-        startDate: data.startDate ? new Date(data.startDate) : undefined,
-        endDate: data.endDate ? new Date(data.endDate) : undefined,
-      }
-    });
+  update: async (id: string, data: object) => {
+    // TODO: update trip in DB
   },
-
-  deleteTrip: async (id: string, userId: string) => {
-    return await prisma.trip.deleteMany({
-      where: { id, userId }
-    });
-  }
+  remove: async (id: string) => {
+    // TODO: delete trip from DB
+  },
 };
