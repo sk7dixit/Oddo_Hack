@@ -29,7 +29,6 @@ const ChecklistPage = () => {
       setItems(fetchedItems);
       localStorage.setItem(`checklist_${TRIP_ID}`, JSON.stringify(fetchedItems));
     } catch (err) {
-      console.error(err);
     } finally {
       if (showLoader) setLoading(false);
     }
