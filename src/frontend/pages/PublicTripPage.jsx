@@ -2,9 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import { getPublicTrip } from "../services/public.service";
-import Loader from "../components/common/Loader";
-import Button from "../components/common/Button";
-import Card from "../components/common/Card";
 
 const PublicTripPage = () => {
   const { tripId } = useParams();
@@ -18,7 +15,7 @@ const PublicTripPage = () => {
       const response = await getPublicTrip(tripId);
       setData(response.data);
     } catch (err) {
-      setError("This itinerary could not be found or is set to private.");
+      setError("This itinerary could not be found.");
     } finally {
       setLoading(false);
     }
@@ -28,175 +25,112 @@ const PublicTripPage = () => {
     fetchPublicData();
   }, [tripId]);
 
-  const handleShareLink = () => {
-    navigator.clipboard.writeText(window.location.href);
-    toast.success("Link copied to clipboard! 🔗", {
-      style: { borderRadius: '20px', background: '#333', color: '#fff' }
-    });
-  };
+  if (loading) return <div className="min-h-screen bg-white flex items-center justify-center"><div className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div></div>;
 
-  const handleShareSummary = () => {
-    if (!data) return;
-    const { trip, checklist, notes } = data;
-    const summary = `
-🌍 Trip: ${trip?.title || "My Adventure"}
-📍 Destination: ${trip?.destinations?.join(", ")}
-✅ Packing: ${checklist?.items?.filter(i => i.packed).length}/${checklist?.items?.length} items ready
-📝 Memories: ${notes?.length} entries shared
-🔗 View full itinerary: ${window.location.href}
-    `.trim();
-    
-    navigator.clipboard.writeText(summary);
-    toast.success("Summary copied! Ready to paste in WhatsApp/Slack ✈️", {
-      duration: 4000,
-      icon: '📱'
-    });
-  };
-
-  if (loading) return <Loader fullPage />;
-
-  if (error) {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-slate-50 text-center">
-        <div className="w-24 h-24 bg-rose-50 text-rose-500 rounded-[2rem] flex items-center justify-center text-5xl mb-8">⚠️</div>
-        <h1 className="text-3xl font-black text-slate-800 mb-4 tracking-tight">Itinerary Not Found</h1>
-        <p className="text-slate-500 mb-10 max-w-md font-medium leading-relaxed">{error}</p>
-        <Link to="/">
-          <Button variant="outline">Back to Dashboard</Button>
-        </Link>
-      </div>
-    );
-  }
+  if (error) return (
+    <div className="min-h-screen flex flex-col items-center justify-center p-6 text-center">
+      <h1 className="text-4xl font-black mb-4">404 Trip Not Found</h1>
+      <Link to="/checklist" className="text-blue-600 font-bold">Back to App</Link>
+    </div>
+  );
 
   const { trip, checklist, notes } = data;
 
   return (
-    <div className="min-h-screen bg-[#FDFDFE] text-slate-900 font-sans selection:bg-blue-100 selection:text-blue-900 pb-20">
+    <div className="min-h-screen bg-[#FDFDFE] selection:bg-blue-600 selection:text-white">
       
-      <nav className="fixed top-0 left-0 w-full bg-white/70 backdrop-blur-xl border-b border-slate-100 z-50 px-6 py-4">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-blue-600 rounded-xl flex items-center justify-center text-white text-xs">✈️</div>
-            <span className="text-lg font-black tracking-tighter">Traveloop</span>
-          </div>
-          <div className="flex gap-3">
-             <Button onClick={handleShareSummary} variant="secondary" className="px-5 py-2 rounded-full h-auto text-[10px] font-black uppercase tracking-widest hidden sm:flex">
-               Share Summary
-             </Button>
-             <Button onClick={handleShareLink} variant="primary" className="px-6 py-2 rounded-full h-auto text-[10px] font-black uppercase tracking-widest">
-               Copy Link
-             </Button>
-          </div>
+      {/* Cinematic Header */}
+      <nav className="fixed top-0 left-0 w-full bg-white/70 backdrop-blur-2xl z-50 px-8 py-6 flex items-center justify-between border-b border-slate-50">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 bg-slate-900 rounded-2xl flex items-center justify-center text-white text-lg shadow-xl shadow-slate-200">✈️</div>
+          <span className="text-xl font-black tracking-tighter">Traveloop Shared</span>
         </div>
+        <button 
+          onClick={() => {
+            navigator.clipboard.writeText(window.location.href);
+            toast.success("Link copied!");
+          }}
+          className="bg-slate-900 text-white text-[10px] font-black uppercase tracking-widest px-8 py-3 rounded-full hover:scale-105 transition-all shadow-xl shadow-slate-200"
+        >
+          Share Itinerary
+        </button>
       </nav>
 
-      <div className="max-w-5xl mx-auto pt-32 px-6">
-        <header className="mb-24 text-center animate-in fade-in slide-in-from-top-8 duration-1000">
-          <div className="inline-block px-5 py-2 bg-blue-50/50 text-blue-600 rounded-full text-[10px] font-black mb-10 tracking-[0.3em] uppercase">
-            Traveloop Shared Experience
-          </div>
-          <h1 className="text-7xl md:text-9xl font-black mb-10 tracking-tighter text-slate-900 leading-[0.85]">
-            {trip?.title || "Exploring The World"}
-          </h1>
-          <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-6 text-slate-400 font-bold uppercase tracking-[0.2em] text-[10px]">
-            <span className="flex items-center gap-3">📍 {trip?.destinations?.join(", ") || "Global Destination"}</span>
-            <span className="w-2 h-2 bg-slate-200 rounded-full hidden md:block"></span>
-            <span className="flex items-center gap-3">📅 {trip?.startDate ? new Date(trip.startDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric' }) : "Dates TBD"}</span>
-          </div>
+      <div className="max-w-6xl mx-auto pt-40 px-6 pb-40">
+        
+        <header className="mb-32 text-center">
+           <span className="text-[10px] font-black text-blue-600 uppercase tracking-[0.4em] mb-10 block">Explorer Itinerary</span>
+           <h1 className="text-8xl md:text-[10rem] font-black tracking-tighter leading-[0.8] mb-12 text-slate-900">
+             {trip?.title || "Exploring The World"}
+           </h1>
+           <div className="flex flex-wrap items-center justify-center gap-12 text-[10px] font-black text-slate-300 uppercase tracking-[0.2em]">
+             <span className="flex items-center gap-3">📍 {trip?.destinations?.join(", ")}</span>
+             <span className="w-1.5 h-1.5 bg-slate-200 rounded-full"></span>
+             <span>📅 {trip?.startDate ? new Date(trip.startDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric' }) : "Dates TBD"}</span>
+           </div>
         </header>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-20 items-start">
+          
+          {/* Left: Journal Entries (Span 7) */}
           <div className="lg:col-span-7 space-y-24">
-            <section className="space-y-12">
-              <div className="flex items-center gap-6">
-                 <h2 className="text-xs font-black text-slate-300 uppercase tracking-[0.4em]">The Journal</h2>
-                 <div className="flex-1 h-[1px] bg-slate-100"></div>
-              </div>
-              
-              {notes?.length > 0 ? (
-                notes.map((note) => (
-                  <div key={note._id} className="animate-in fade-in slide-in-from-bottom-6 duration-1000">
-                    <p className="text-4xl md:text-5xl font-black text-slate-800 leading-[1.1] tracking-tighter mb-10">
-                      "{note.content}"
-                    </p>
-                    <div className="flex items-center gap-4">
-                       <div className="w-10 h-10 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-center text-xs">📷</div>
-                       <div className="flex flex-col">
-                          <span className="text-[10px] font-black text-slate-900 uppercase tracking-widest leading-none mb-1">Authenticated Memory</span>
-                          <span className="text-[10px] font-bold text-slate-300 uppercase tracking-widest leading-none">
-                             {new Date(note.createdAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
-                          </span>
-                       </div>
-                    </div>
+             <div className="flex items-center gap-6">
+                <h2 className="text-[10px] font-black text-slate-200 uppercase tracking-[0.5em]">The Journal</h2>
+                <div className="flex-1 h-[1px] bg-slate-50"></div>
+             </div>
+             
+             {notes?.map((note) => (
+               <div key={note._id} className="animate-in fade-in slide-in-from-bottom-8 duration-1000">
+                  <p className="text-4xl md:text-5xl font-black text-slate-800 tracking-tighter leading-[1.05] mb-8">
+                    "{note.content}"
+                  </p>
+                  <div className="flex items-center gap-4 text-[10px] font-black text-slate-300 uppercase tracking-widest">
+                    <span>Verified Memory</span>
+                    <span>•</span>
+                    <span>{new Date(note.createdAt).toLocaleDateString()}</span>
                   </div>
-                ))
-              ) : (
-                <EmptyState message="No journal entries shared." icon="📖" />
-              )}
-            </section>
+               </div>
+             ))}
           </div>
 
-          <div className="lg:col-span-5">
-            <div className="sticky top-32 space-y-10">
-              <Card className="bg-slate-900 text-white border-none p-12 overflow-hidden relative shadow-2xl shadow-slate-200">
-                <div className="absolute top-[-20%] right-[-20%] w-60 h-60 bg-blue-600/30 blur-[100px] rounded-full"></div>
-                <h3 className="text-2xl font-black mb-10 relative z-10 flex items-center gap-4">
-                  <span className="w-12 h-12 bg-white/10 rounded-3xl flex items-center justify-center text-xl">✓</span>
+          {/* Right: Checklist (Span 5) */}
+          <div className="lg:col-span-5 sticky top-32">
+             <div className="bg-slate-900 rounded-[3rem] p-12 text-white shadow-2xl shadow-slate-200 overflow-hidden relative">
+                <div className="absolute top-[-20%] left-[-20%] w-60 h-60 bg-blue-600/20 blur-[80px] rounded-full"></div>
+                <h3 className="text-2xl font-black mb-12 relative z-10 flex items-center gap-4">
+                  <span className="w-10 h-10 bg-white/10 rounded-2xl flex items-center justify-center text-sm">✓</span>
                   Gear Status
                 </h3>
-                <div className="space-y-5 relative z-10">
-                  {checklist?.items?.length > 0 ? (
-                    checklist.items.map((item, index) => (
-                      <div key={index} className="flex items-center gap-5 py-1 group">
-                        <div className={`w-6 h-6 rounded-xl flex items-center justify-center transition-all duration-500 ${item.packed ? "bg-blue-500 shadow-lg shadow-blue-500/50" : "bg-white/10 border border-white/5"}`}>
-                          {item.packed && <span className="text-xs font-bold">✓</span>}
+                <div className="space-y-4 relative z-10">
+                   {checklist?.items?.map((item, index) => (
+                     <div key={index} className="flex items-center gap-5 opacity-80 group">
+                        <div className={`w-5 h-5 rounded-lg flex items-center justify-center transition-all ${item.packed ? "bg-blue-500" : "bg-white/10"}`}>
+                           {item.packed && <span className="text-[10px]">✓</span>}
                         </div>
-                        <span className={`text-lg font-bold tracking-tight transition-all duration-500 ${item.packed ? "text-slate-500 line-through" : "text-slate-200"}`}>
-                          {item.text}
-                        </span>
-                      </div>
-                    ))
-                  ) : (
-                    <p className="text-slate-600 text-sm font-black italic">Checklist remains private.</p>
-                  )}
+                        <span className={`text-lg font-bold tracking-tight ${item.packed ? "text-slate-500 line-through" : "text-white"}`}>{item.text}</span>
+                     </div>
+                   ))}
                 </div>
-                
-                <div className="mt-12 pt-10 border-t border-white/5 relative z-10 flex items-end justify-between">
+                <div className="mt-16 pt-10 border-t border-white/5 relative z-10 flex items-center justify-between">
                    <div>
-                      <p className="text-[10px] font-black text-white/30 uppercase tracking-widest mb-1">Packed Ratio</p>
-                      <p className="text-4xl font-black">
-                        {checklist?.items?.filter(i => i.packed).length || 0}<span className="text-white/20">/</span>{checklist?.items?.length || 0}
-                      </p>
+                      <p className="text-[10px] font-black text-white/30 uppercase tracking-widest mb-1">Packed</p>
+                      <p className="text-3xl font-black">{checklist?.items?.filter(i => i.packed).length || 0}<span className="text-white/20 text-xl">/{checklist?.items?.length || 0}</span></p>
                    </div>
                    <div className="text-right">
-                      <p className="text-[10px] font-black text-white/30 uppercase tracking-widest mb-1">Readiness</p>
-                      <p className="text-4xl font-black text-blue-500">
-                        {Math.round((checklist?.items?.filter(i => i.packed).length / checklist?.items?.length) * 100 || 0)}%
-                      </p>
+                      <p className="text-[10px] font-black text-white/30 uppercase tracking-widest mb-1">Ready</p>
+                      <p className="text-3xl font-black text-blue-500">{Math.round((checklist?.items?.filter(i => i.packed).length / checklist?.items?.length) * 100 || 0)}%</p>
                    </div>
                 </div>
-              </Card>
-
-              <div className="bg-slate-50 p-10 rounded-[3rem] border border-slate-100 flex items-center justify-between">
-                 <div className="flex flex-col">
-                    <span className="text-[10px] font-black text-slate-300 uppercase tracking-widest mb-1">Shared by</span>
-                    <span className="text-sm font-black text-slate-800">Traveloop User</span>
-                 </div>
-                 <div className="w-12 h-12 rounded-2xl bg-blue-600 flex items-center justify-center text-white font-black shadow-lg shadow-blue-100">U</div>
-              </div>
-            </div>
+             </div>
           </div>
+
         </div>
 
-        <footer className="mt-48 pt-24 border-t border-slate-50 text-center flex flex-col items-center">
-           <div className="w-16 h-16 bg-slate-50 rounded-3xl flex items-center justify-center text-2xl mb-10 grayscale opacity-30">✈️</div>
-           <p className="text-[10px] font-black text-slate-300 uppercase tracking-[0.5em] mb-12">Traveloop Shared Intelligence</p>
-           <div className="flex gap-12 text-slate-200 text-3xl font-black">
-              <span className="hover:text-slate-900 cursor-pointer transition-all hover:scale-110">𝕏</span>
-              <span className="hover:text-slate-900 cursor-pointer transition-all hover:scale-110">📸</span>
-              <span className="hover:text-slate-900 cursor-pointer transition-all hover:scale-110">💼</span>
-           </div>
+        <footer className="mt-64 pt-32 border-t border-slate-50 flex flex-col items-center gap-8">
+           <div className="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center text-xl grayscale opacity-20">✈️</div>
+           <p className="text-[10px] font-black text-slate-300 uppercase tracking-[0.6em]">Traveloop AI</p>
         </footer>
+
       </div>
     </div>
   );

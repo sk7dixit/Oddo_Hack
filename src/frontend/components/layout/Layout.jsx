@@ -1,30 +1,28 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
-import Sidebar from "./Sidebar";
 
 const Layout = () => {
   return (
-    <div className="flex h-screen bg-slate-100 w-full overflow-hidden">
-      {/* Sidebar - Fixed width, hidden on small mobile if needed, but here we keep it for desktop focus */}
-      <aside className="w-64 bg-white border-r border-slate-200 hidden md:block">
-        <Sidebar />
-      </aside>
+    <div className="min-h-screen bg-slate-50 flex flex-col font-sans text-slate-900">
+      {/* SaaS Top Navigation */}
+      <Navbar />
 
-      {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-w-0">
-        {/* Navbar - Fixed height header */}
-        <header className="h-16 bg-white border-b border-slate-200 flex items-center px-6 shrink-0">
-          <Navbar />
-        </header>
-
-        {/* Dynamic Page Stage */}
-        <main className="flex-1 overflow-y-auto p-8 lg:p-12">
-          <div className="w-full">
-            <Outlet />
+      {/* Main Responsive Content Stage */}
+      <main className="flex-1 w-full max-w-7xl mx-auto px-6 py-12 lg:py-16">
+        <Outlet />
+      </main>
+      
+      {/* Minimal Footer */}
+      <footer className="py-10 border-t border-slate-100 bg-white">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="flex items-center gap-3 grayscale opacity-30">
+            <div className="w-8 h-8 bg-slate-800 rounded-xl flex items-center justify-center text-white text-xs">✈️</div>
+            <span className="text-sm font-black tracking-tighter text-slate-800 uppercase">Traveloop</span>
           </div>
-        </main>
-      </div>
+          <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest">© 2026 Traveloop AI • Hackathon Edition</p>
+        </div>
+      </footer>
     </div>
   );
 };

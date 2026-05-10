@@ -1,42 +1,50 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import GradientNav from "../ui/GradientNav";
 
 const Navbar = () => {
-  const location = useLocation();
-  
-  const getPageTitle = () => {
-    switch (location.pathname) {
-      case "/": return "Packing Checklist";
-      case "/notes": return "Travel Journal";
-      default: return "Dashboard";
-    }
-  };
-
   return (
-    <nav className="h-24 flex items-center justify-between px-10 bg-white/80 backdrop-blur-md border-b border-slate-50 sticky top-0 z-40">
-      <div className="flex flex-col">
-        <h2 className="text-xl font-black text-slate-800 tracking-tight">{getPageTitle()}</h2>
-        <div className="flex items-center gap-2 mt-1">
-          <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Live Sync Enabled</span>
-        </div>
-      </div>
-      
-      <div className="flex items-center gap-6">
-        <div className="flex -space-x-3">
-          {[1, 2].map(i => (
-            <div key={i} className="w-10 h-10 rounded-2xl border-4 border-white bg-slate-100 flex items-center justify-center text-xs font-bold text-slate-400 overflow-hidden">
-              <img src={`https://i.pravatar.cc/100?img=${i+10}`} alt="avatar" />
+    <header className="bg-white/80 backdrop-blur-xl border-b border-slate-100 sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto h-24 px-6 flex items-center justify-between">
+        
+        {/* Left Section: Branding */}
+        <div className="flex items-center gap-10">
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 rounded-2xl bg-blue-600 flex items-center justify-center text-white text-xl shadow-lg shadow-blue-100">
+              ✈️
             </div>
-          ))}
-          <div className="w-10 h-10 rounded-2xl border-4 border-white bg-blue-600 flex items-center justify-center text-white text-[10px] font-black">+</div>
+            <h1 className="text-2xl font-black text-slate-800 tracking-tighter">Traveloop</h1>
+          </div>
+
+          {/* Animated Navigation Pills */}
+          <div className="hidden lg:block">
+            <GradientNav />
+          </div>
         </div>
-        <div className="h-10 w-[1px] bg-slate-100"></div>
-        <button className="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center text-xl hover:bg-slate-100 transition-colors">
-          ⚙️
-        </button>
+
+        {/* Right Section: Actions & Account */}
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 pr-4 border-r border-slate-100">
+            <button className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400 hover:bg-slate-100 hover:text-slate-600 transition-all border border-slate-100">
+              🔔
+            </button>
+            <button className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400 hover:bg-slate-100 hover:text-slate-600 transition-all border border-slate-100">
+              ⚙️
+            </button>
+          </div>
+          
+          <div className="flex items-center gap-3 pl-2">
+            <div className="text-right hidden sm:block">
+               <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest leading-none mb-1">Explorer</p>
+               <p className="text-sm font-black text-slate-800 leading-none">Traveloop User</p>
+            </div>
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center font-black shadow-lg shadow-blue-100">
+              U
+            </div>
+          </div>
+        </div>
+
       </div>
-    </nav>
+    </header>
   );
 };
 

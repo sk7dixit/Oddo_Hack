@@ -24,7 +24,7 @@ const ChecklistPage = () => {
       setItems(fetchedItems);
       localStorage.setItem(`checklist_${TRIP_ID}`, JSON.stringify(fetchedItems));
     } catch (err) {
-      // Error handled silently or via toast in CRUD
+      // Handled silently
     } finally {
       if (showLoader) setLoading(false);
     }
@@ -51,7 +51,7 @@ const ChecklistPage = () => {
       }
       setChecklist(response.data);
       localStorage.setItem(`checklist_${TRIP_ID}`, JSON.stringify(response.data.items));
-      toast.success("Added to list");
+      toast.success("Added!");
     } catch (err) {
       setItems(prevItems);
       toast.error("Failed to sync");
@@ -70,7 +70,6 @@ const ChecklistPage = () => {
       const response = await updateChecklist(checklist._id, { items: updatedItems });
       setChecklist(response.data);
       localStorage.setItem(`checklist_${TRIP_ID}`, JSON.stringify(response.data.items));
-      toast.success(updatedItems[index].packed ? "Packed! 🎒" : "Unpacked");
     } catch (err) {
       setItems(prevItems);
       toast.error("Failed to sync");
@@ -97,87 +96,159 @@ const ChecklistPage = () => {
     }
   };
 
-  if (loading) return <div className="p-12 animate-pulse space-y-6"><div className="h-40 bg-white rounded-3xl"></div></div>;
+  if (loading) return <div className="animate-pulse space-y-6"><div className="h-40 bg-white rounded-3xl"></div></div>;
 
   const packedCount = items.filter(i => i.packed).length;
   const progress = items.length > 0 ? (packedCount / items.length) * 100 : 0;
 
   return (
-    <div className="w-full animate-in fade-in slide-in-from-bottom-4 duration-700 space-y-10">
+    <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">
       
-      {/* Header Section */}
-      <div className="bg-white rounded-[2.5rem] p-12 shadow-sm border border-slate-100 flex flex-col md:flex-row justify-between items-center gap-8">
-        <div className="text-center md:text-left">
-          <h1 className="text-5xl font-black text-slate-800 tracking-tighter mb-2">Packing Checklist</h1>
-          <p className="text-slate-400 font-bold uppercase tracking-widest text-xs">Trip to Destination • {items.length} Items Total</p>
-        </div>
-        <div className="flex items-center gap-6">
-           <div className="text-right">
-              <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest">Progress</p>
-              <p className="text-3xl font-black text-blue-600">{Math.round(progress)}%</p>
-           </div>
-           <div className="w-20 h-20 rounded-full border-8 border-slate-50 flex items-center justify-center relative">
-              <div className="absolute inset-0 rounded-full border-8 border-blue-600 transition-all duration-1000" style={{ clipPath: `inset(${100 - progress}% 0 0 0)` }}></div>
-              <span className="text-xl">✈️</span>
-           </div>
-        </div>
-      </div>
-
-      {/* Input Card */}
-      <div className="bg-white rounded-[2.5rem] p-8 shadow-sm border border-slate-100">
-        <div className="flex gap-4">
-          <input
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            onKeyPress={(e) => e.key === "Enter" && handleAddItem()}
-            placeholder="Add an essential item..."
-            className="flex-1 bg-slate-50 border-none rounded-2xl px-6 py-4 text-xl font-bold text-slate-700 placeholder:text-slate-200 focus:ring-4 focus:ring-blue-50 outline-none transition-all"
-          />
-          <button 
-            onClick={handleAddItem}
-            disabled={!text.trim() || isSyncing}
-            className="bg-blue-600 text-white font-black px-12 rounded-2xl hover:bg-blue-700 transition-all shadow-lg shadow-blue-100 disabled:opacity-50"
-          >
-            Add
-          </button>
-        </div>
-      </div>
-
-      {/* Grid List */}
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-        {items.length === 0 ? (
-          <div className="col-span-full bg-slate-50 border-4 border-dashed border-white rounded-[3rem] p-24 text-center">
-             <span className="text-6xl mb-6 block grayscale opacity-20">🧳</span>
-             <h3 className="text-2xl font-black text-slate-400">Your list is empty</h3>
-          </div>
-        ) : (
-          items.map((item, index) => (
-            <div 
-              key={index}
-              className={`group flex items-center gap-6 p-8 rounded-[2.5rem] border transition-all duration-500 ${
-                item.packed ? "bg-slate-50 border-slate-100 opacity-60" : "bg-white border-white shadow-sm hover:shadow-xl hover:shadow-slate-200/50 hover:-translate-y-1"
-              }`}
-            >
-              <div 
-                onClick={() => !isSyncing && togglePacked(index)}
-                className={`w-12 h-12 rounded-2xl border-2 flex items-center justify-center cursor-pointer transition-all ${
-                  item.packed ? "bg-blue-600 border-blue-600 text-white" : "border-slate-100 bg-slate-50"
-                }`}
-              >
-                {item.packed && <span className="font-bold text-2xl">✓</span>}
+      {/* Optimized Grid Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        {/* Left Side: Core Flow (Span 8) */}
+        <div className="lg:col-span-8 space-y-6">
+          
+          {/* Compact Header Card */}
+          <div className="bg-white rounded-[2rem] p-8 border border-slate-100 shadow-sm relative overflow-hidden group">
+            <div className="absolute top-0 right-0 p-8 text-4xl opacity-5 grayscale group-hover:scale-110 transition-transform">🎒</div>
+            <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+              <div>
+                <h1 className="text-3xl font-black text-slate-800 tracking-tighter mb-1">Packing List</h1>
+                <p className="text-slate-400 font-bold uppercase tracking-[0.2em] text-[9px] mb-6">Trip Management Mode</p>
+                
+                <div className="flex gap-2">
+                  <input
+                    value={text}
+                    onChange={(e) => setText(e.target.value)}
+                    onKeyPress={(e) => e.key === "Enter" && handleAddItem()}
+                    placeholder="Add an essential..."
+                    className="w-full sm:w-64 bg-slate-50 border-none rounded-xl px-4 py-3 text-sm font-bold text-slate-700 placeholder:text-slate-200 focus:ring-4 focus:ring-blue-50 outline-none transition-all"
+                  />
+                  <button 
+                    onClick={handleAddItem}
+                    disabled={!text.trim() || isSyncing}
+                    className="bg-blue-600 text-white text-xs font-black px-6 rounded-xl hover:bg-blue-700 transition-all shadow-lg shadow-blue-50 disabled:opacity-50"
+                  >
+                    Add
+                  </button>
+                </div>
               </div>
-              <span className={`flex-1 text-2xl font-black tracking-tight ${item.packed ? "text-slate-400 line-through" : "text-slate-700"}`}>
-                {item.text}
-              </span>
-              <button 
-                onClick={() => !isSyncing && removeItem(index)}
-                className="w-12 h-12 rounded-2xl flex items-center justify-center text-slate-100 hover:text-rose-500 hover:bg-rose-50 transition-all opacity-0 group-hover:opacity-100"
-              >
-                🗑️
-              </button>
+
+              {/* Mini Stats Line */}
+              <div className="flex gap-6 pt-4 sm:pt-0 border-t sm:border-t-0 sm:border-l border-slate-50 sm:pl-8">
+                 <div className="text-center">
+                    <p className="text-[9px] font-black text-slate-300 uppercase tracking-widest mb-1">Items</p>
+                    <p className="text-xl font-black text-slate-800">{items.length}</p>
+                 </div>
+                 <div className="text-center">
+                    <p className="text-[9px] font-black text-slate-300 uppercase tracking-widest mb-1">Packed</p>
+                    <p className="text-xl font-black text-blue-600">{packedCount}</p>
+                 </div>
+              </div>
             </div>
-          ))
-        )}
+          </div>
+
+          {/* Denser Items List */}
+          <div className="space-y-3">
+            {items.length === 0 ? (
+              <div className="bg-slate-50/50 border-2 border-dashed border-white rounded-[2rem] py-16 text-center">
+                 <span className="text-2xl mb-2 block grayscale opacity-20">🧳</span>
+                 <p className="text-xs font-black text-slate-300 uppercase tracking-widest">List is empty</p>
+              </div>
+            ) : (
+              items.map((item, index) => (
+                <div 
+                  key={index}
+                  className={`group flex items-center gap-4 p-4 rounded-2xl border transition-all duration-300 ${
+                    item.packed ? "bg-slate-50/50 border-slate-100 opacity-60" : "bg-white border-white shadow-sm hover:shadow-md hover:-translate-y-0.5"
+                  }`}
+                >
+                  <div 
+                    onClick={() => !isSyncing && togglePacked(index)}
+                    className={`w-8 h-8 rounded-xl border-2 flex items-center justify-center cursor-pointer transition-all ${
+                      item.packed ? "bg-blue-600 border-blue-600 text-white" : "border-slate-100 bg-slate-50 hover:border-blue-200"
+                    }`}
+                  >
+                    {item.packed && <span className="font-bold text-sm">✓</span>}
+                  </div>
+                  <span className={`flex-1 text-base font-bold tracking-tight ${item.packed ? "text-slate-400 line-through" : "text-slate-700"}`}>
+                    {item.text}
+                  </span>
+                  <button 
+                    onClick={() => !isSyncing && removeItem(index)}
+                    className="w-8 h-8 rounded-lg flex items-center justify-center text-slate-100 hover:text-rose-500 hover:bg-rose-50 transition-all opacity-0 group-hover:opacity-100"
+                  >
+                    🗑️
+                  </button>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+
+        {/* Right Side: Compressed Tools (Span 4) */}
+        <div className="lg:col-span-4 space-y-6 sticky top-28">
+          
+          {/* More Compact Readiness Card */}
+          <div className="bg-[#0A0D1E] rounded-[2rem] p-8 text-white shadow-2xl shadow-slate-200 overflow-hidden relative">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-blue-600/20 blur-[60px] rounded-full"></div>
+            <div className="relative z-10">
+              <p className="text-[9px] font-black opacity-40 uppercase tracking-[0.2em] mb-6">Readiness Status</p>
+              <div className="flex items-end justify-between mb-4">
+                <span className="text-5xl font-black tracking-tighter">{Math.round(progress)}%</span>
+                <div className="text-right">
+                   <p className="text-[8px] font-black text-blue-400 uppercase tracking-widest leading-none mb-1">Live Sync</p>
+                   <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse ml-auto"></div>
+                </div>
+              </div>
+              <div className="w-full bg-white/5 h-2 rounded-full overflow-hidden">
+                 <div className="bg-blue-600 h-full transition-all duration-1000 ease-out shadow-[0_0_15px_rgba(37,99,235,0.5)]" style={{ width: `${progress}%` }}></div>
+              </div>
+              <div className="mt-6 flex justify-between text-[8px] font-black uppercase tracking-widest text-white/20">
+                 <span>{packedCount} / {items.length} COMPLETED</span>
+                 <span className="text-white/40">{Math.round(100 - progress)}% LEFT</span>
+              </div>
+            </div>
+          </div>
+
+          {/* High-Density Action List */}
+          <div className="bg-white rounded-[2rem] p-6 border border-slate-100 shadow-sm">
+             <h3 className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-6">Dashboard Tools</h3>
+             <div className="grid grid-cols-1 gap-3">
+                <button 
+                  onClick={() => {
+                    navigator.clipboard.writeText(window.location.origin + `/public/${TRIP_ID}`);
+                    toast.success("Link copied!");
+                  }}
+                  className="w-full flex items-center justify-between p-4 bg-slate-50 rounded-xl hover:bg-slate-100 transition-all group"
+                >
+                  <div className="flex items-center gap-3">
+                     <span className="text-lg">🔗</span>
+                     <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Share Link</span>
+                  </div>
+                  <span className="text-slate-200 group-hover:text-slate-400 transition-colors">→</span>
+                </button>
+                <button className="w-full flex items-center justify-between p-4 bg-slate-50 rounded-xl hover:bg-slate-100 transition-all group">
+                   <div className="flex items-center gap-3">
+                     <span className="text-lg">🖨️</span>
+                     <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Export PDF</span>
+                  </div>
+                  <span className="text-slate-200 group-hover:text-slate-400 transition-colors">→</span>
+                </button>
+                <button className="w-full flex items-center justify-between p-4 bg-slate-50 rounded-xl hover:bg-slate-100 transition-all group">
+                   <div className="flex items-center gap-3">
+                     <span className="text-lg">⚙️</span>
+                     <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Settings</span>
+                  </div>
+                  <span className="text-slate-200 group-hover:text-slate-400 transition-colors">→</span>
+                </button>
+             </div>
+          </div>
+
+        </div>
+
       </div>
 
     </div>
