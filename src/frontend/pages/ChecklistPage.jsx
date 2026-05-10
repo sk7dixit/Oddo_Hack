@@ -124,89 +124,97 @@ const ChecklistPage = () => {
 
   return (
     <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">
-      <div className="flex flex-col lg:flex-row gap-10">
-        <div className="flex-1">
-          <Card 
-            title="Packing Checklist" 
-            subtitle={isSyncing ? "Syncing changes..." : "All changes saved locally and to cloud."}
-          >
-            <div className="flex flex-col sm:flex-row gap-4 mb-12">
-              <Input
-                value={text}
-                onChange={(e) => setText(e.target.value)}
-                onKeyPress={(e) => e.key === "Enter" && handleAddItem()}
-                placeholder="What else do you need?"
-                className="flex-1"
-                autoFocus
-              />
-              <Button onClick={handleAddItem} disabled={!text.trim() || isSyncing} className="sm:w-48 h-[58px]">
-                {isSyncing ? "..." : "Add Item"}
-              </Button>
+      <div className="max-w-4xl mx-auto space-y-8">
+        
+        {/* Header Card */}
+        <div className="bg-white rounded-[2.5rem] p-10 shadow-[0_20px_50px_rgba(0,0,0,0.04)] border border-slate-50">
+          <div className="flex items-center gap-4 mb-6">
+            <span className="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center text-2xl">🎒</span>
+            <div>
+              <h1 className="text-4xl font-black text-slate-800 tracking-tighter">Packing Checklist</h1>
+              <p className="text-slate-400 font-bold text-sm tracking-tight">Stay organized. Travel lighter.</p>
             </div>
+          </div>
 
-            <div className="space-y-4">
-              {items.length === 0 ? (
-                <EmptyState message="Your packing list is empty" icon="🎒">
-                   <p className="text-slate-400 font-medium">Add essentials like your passport, charger, or sunscreen.</p>
-                </EmptyState>
-              ) : (
-                items.map((item, index) => (
-                  <div
-                    key={index}
-                    className={`group flex items-center gap-5 p-6 rounded-[1.5rem] border transition-all duration-300 ${
-                      item.packed 
-                        ? "bg-slate-50/50 border-slate-100 opacity-60" 
-                        : "bg-white border-slate-100 hover:border-blue-200 hover:shadow-xl hover:shadow-blue-50/30 hover:-translate-y-1"
-                    }`}
-                  >
-                    <div 
-                      onClick={() => !isSyncing && togglePacked(index)}
-                      className={`w-8 h-8 rounded-xl border-2 flex items-center justify-center cursor-pointer transition-all ${
-                        item.packed ? "bg-blue-600 border-blue-600 text-white" : "border-slate-200 bg-white"
-                      }`}
-                    >
-                      {item.packed && <span className="font-bold">✓</span>}
-                    </div>
-                    <span className={`flex-1 text-lg font-bold tracking-tight transition-all ${
-                      item.packed ? "text-slate-400 line-through" : "text-slate-700"
-                    }`}>
-                      {item.text}
-                    </span>
-                    <button
-                      onClick={() => !isSyncing && removeItem(index)}
-                      className="w-10 h-10 rounded-xl flex items-center justify-center text-slate-300 hover:bg-rose-50 hover:text-rose-500 transition-all opacity-0 group-hover:opacity-100"
-                    >
-                      🗑️
-                    </button>
-                  </div>
-                ))
-              )}
-            </div>
-          </Card>
+          <div className="flex gap-4">
+            <input
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+              onKeyPress={(e) => e.key === "Enter" && handleAddItem()}
+              placeholder="Add your travel essential..."
+              className="flex-1 bg-slate-50 border-none rounded-2xl px-6 py-4 text-lg font-bold text-slate-700 placeholder:text-slate-300 focus:ring-4 focus:ring-blue-100 outline-none transition-all"
+              autoFocus
+            />
+            <button 
+              onClick={handleAddItem} 
+              disabled={!text.trim() || isSyncing}
+              className="bg-blue-600 hover:bg-blue-700 text-white font-black px-10 rounded-2xl transition-all hover:scale-105 active:scale-95 disabled:opacity-50 shadow-lg shadow-blue-100"
+            >
+              {isSyncing ? "..." : "Add"}
+            </button>
+          </div>
         </div>
 
-        <div className="w-full lg:w-80 space-y-6">
-          <Card title="Quick Stats" className="bg-blue-600 text-white border-none shadow-xl shadow-blue-200 overflow-hidden relative">
-            <div className="absolute top-[-20%] left-[-20%] w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
-            <div className="relative z-10 flex flex-col items-center py-4">
-              <div className="text-5xl font-black mb-2">{Math.round(progress)}%</div>
-              <p className="font-bold opacity-60 uppercase text-[10px] tracking-[0.3em]">Completion</p>
-              <div className="w-full bg-white/20 h-2 rounded-full mt-8 overflow-hidden">
-                <div className="bg-white h-full transition-all duration-1000 ease-out" style={{ width: `${progress}%` }}></div>
-              </div>
+        {/* Stats Summary */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+           <div className="bg-white p-6 rounded-[2rem] border border-slate-50 shadow-sm flex flex-col items-center">
+              <span className="text-[10px] font-black text-slate-300 uppercase tracking-widest mb-1">Total Items</span>
+              <span className="text-3xl font-black text-slate-800">{items.length}</span>
+           </div>
+           <div className="bg-blue-600 p-6 rounded-[2rem] shadow-xl shadow-blue-100 flex flex-col items-center text-white">
+              <span className="text-[10px] font-black opacity-60 uppercase tracking-widest mb-1">Packed</span>
+              <span className="text-3xl font-black">{packedCount}</span>
+           </div>
+           <div className="bg-white p-6 rounded-[2rem] border border-slate-50 shadow-sm flex flex-col items-center">
+              <span className="text-[10px] font-black text-slate-300 uppercase tracking-widest mb-1">Remaining</span>
+              <span className="text-3xl font-black text-slate-800">{items.length - packedCount}</span>
+           </div>
+           <div className="bg-white p-6 rounded-[2rem] border border-slate-50 shadow-sm flex flex-col items-center">
+              <span className="text-[10px] font-black text-slate-300 uppercase tracking-widest mb-1">Readiness</span>
+              <span className="text-3xl font-black text-blue-600">{Math.round(progress)}%</span>
+           </div>
+        </div>
+
+        {/* Items List */}
+        <div className="space-y-4">
+          {items.length === 0 ? (
+            <div className="bg-white p-20 rounded-[3rem] border-2 border-dashed border-slate-100 text-center">
+              <div className="text-6xl mb-6 grayscale opacity-20">🧳</div>
+              <h3 className="text-xl font-black text-slate-800 mb-2">Your list is empty</h3>
+              <p className="text-slate-400 font-bold max-w-xs mx-auto leading-relaxed">Add items like your passport, charger, or sunscreen to get started.</p>
             </div>
-          </Card>
-          
-          <div className="p-8 bg-slate-800 rounded-[2rem] text-white">
-             <h4 className="font-black mb-4 flex items-center gap-2">🔗 Share List</h4>
-             <p className="text-xs text-slate-400 font-bold mb-6 leading-relaxed">Let others know what you're bringing to avoid duplicates!</p>
-             <Button variant="primary" fullWidth className="bg-white text-slate-900 hover:bg-slate-100 shadow-none h-12 text-xs" onClick={() => {
-                navigator.clipboard.writeText(window.location.origin + `/public/${TRIP_ID}`);
-                toast.success("Public link copied!");
-             }}>
-                Copy Public Link
-             </Button>
-          </div>
+          ) : (
+            items.map((item, index) => (
+              <div
+                key={index}
+                className={`group flex items-center gap-6 p-6 rounded-[2rem] border transition-all duration-500 ${
+                  item.packed 
+                    ? "bg-slate-50/50 border-slate-100 opacity-60" 
+                    : "bg-white border-slate-50 hover:border-blue-100 hover:shadow-2xl hover:shadow-blue-50/20 hover:-translate-y-1"
+                }`}
+              >
+                <div 
+                  onClick={() => !isSyncing && togglePacked(index)}
+                  className={`w-10 h-10 rounded-2xl border-2 flex items-center justify-center cursor-pointer transition-all duration-300 ${
+                    item.packed ? "bg-blue-600 border-blue-600 text-white" : "border-slate-200 bg-white hover:border-blue-400"
+                  }`}
+                >
+                  {item.packed && <span className="font-bold text-xl">✓</span>}
+                </div>
+                <span className={`flex-1 text-xl font-black tracking-tight transition-all duration-300 ${
+                  item.packed ? "text-slate-400 line-through" : "text-slate-700"
+                }`}>
+                  {item.text}
+                </span>
+                <button
+                  onClick={() => !isSyncing && removeItem(index)}
+                  className="w-12 h-12 rounded-2xl flex items-center justify-center text-slate-200 hover:bg-rose-50 hover:text-rose-500 transition-all opacity-0 group-hover:opacity-100"
+                >
+                  🗑️
+                </button>
+              </div>
+            ))
+          )}
         </div>
       </div>
     </div>

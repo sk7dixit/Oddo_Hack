@@ -8,20 +8,15 @@ import NotFound from "./pages/NotFound";
 
 function App() {
   return (
-    <>
-      <div className="bg-red-500 text-white p-10 text-center font-bold">
-        Tailwind Verification: If you see this red box, styling is active!
-      </div>
-      <Routes>
-        <Route element={<Layout />}>
-          <Route path="/" element={<ChecklistPage />} />
-          <Route path="/checklist" element={<ChecklistPage />} />
-          <Route path="/notes" element={<NotesPage />} />
-        </Route>
-        <Route path="/public/:tripId" element={<PublicTripPage />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </>
+    <Routes>
+      <Route element={<Layout />}>
+        <Route path="/" element={<ChecklistPage />} />
+        <Route path="/checklist" element={<ChecklistPage />} />
+        <Route path="/notes" element={<NotesPage />} />
+      </Route>
+      <Route path="/public/:tripId" element={<PublicTripPage />} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 }
 
