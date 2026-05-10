@@ -1,12 +1,14 @@
-import React from 'react';
-import LoginForm from '../../components/auth/LoginForm';
+import { SignIn } from '@clerk/clerk-react';
+import bgImage from '../../assets/image.png';
+import './Auth.css';
 
-const LoginPage: React.FC = () => {
+export default function LoginPage() {
   return (
-    <div>
-      <LoginForm />
+    <div className="auth-container">
+      <div className="auth-bg-layer" style={{ backgroundImage: `url(${bgImage})` }} />
+      <div className="auth-card-wrapper">
+        <SignIn />
+      </div>
     </div>
   );
-};
-
-export default LoginPage;
+}

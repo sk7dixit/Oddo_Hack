@@ -1,12 +1,10 @@
 import { Router } from 'express';
-import { login, signup, logout, getProfile } from '../controllers/authController';
-import { protect } from '../middleware/authMiddleware';
+import { syncUser } from '../controllers/authController';
+import { requireAuth } from '@clerk/express';
 
 const router = Router();
 
-router.post('/login', login);
-router.post('/signup', signup);
-router.post('/logout', protect, logout);
-router.get('/profile', protect, getProfile);
+// Protect the route so only authenticated users can access it
+router.post('/sync-user', requireAuth(), syncUser);
 
 export default router;

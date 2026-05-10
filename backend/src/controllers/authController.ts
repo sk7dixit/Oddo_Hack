@@ -1,39 +1,54 @@
 import { Request, Response } from 'express';
+import prisma from '../config/prisma';
+import { getAuth } from '@clerk/express';
 
-export const login = async (req: Request, res: Response): Promise<void> => {
+export const syncUser = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { email, password } = req.body;
-    // TODO: implement login logic
-    res.status(200).json({ message: 'Login successful' });
-  } catch (error) {
-    res.status(500).json({ message: 'Internal server error' });
-  }
-};
+    const auth = getAuth(req);
+    const clerkId = auth.userId;
 
-export const signup = async (req: Request, res: Response): Promise<void> => {
-  try {
-    const { name, email, password } = req.body;
-    // TODO: implement signup logic
-    res.status(201).json({ message: 'User created successfully' });
-  } catch (error) {
-    res.status(500).json({ message: 'Internal server error' });
-  }
-};
+    if (!clerkId) {
+      res.status(401).json({ message: 'Unauthorized' });
+      return;
+    }
 
-export const logout = async (_req: Request, res: Response): Promise<void> => {
-  try {
-    // TODO: implement logout logic
-    res.status(200).json({ message: 'Logout successful' });
-  } catch (error) {
-    res.status(500).json({ message: 'Internal server error' });
-  }
-};
+    const { email, name, profileImage } = req.body;
 
-export const getProfile = async (req: Request, res: Response): Promise<void> => {
-  try {
-    // TODO: fetch user profile from DB
-    res.status(200).json({ message: 'Profile fetched' });
+    if (!email) {
+      res.status(400).json({ message: 'Email is required' });
+      return;
+    }
+
+    // Check if user already exists
+    let user = await prisma.user.findUnique({
+      where: { clerkId }
+    });
+
+    if (!user) {
+      // Create new user
+      user = await prisma.user.create({
+        data: {
+          clerkId,
+          email,
+          name,
+          profileImage
+        }
+      });
+      res.status(201).json({ message: 'User created successfully', user });
+      return;
+    }
+
+    // Optionally update user info if needed
+    if (user.email !== email || user.name !== name || user.profileImage !== profileImage) {
+      user = await prisma.user.update({
+        where: { clerkId },
+        data: { email, name, profileImage }
+      });
+    }
+
+    res.status(200).json({ message: 'User already exists', user });
   } catch (error) {
+    console.error('Error syncing user:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 };
