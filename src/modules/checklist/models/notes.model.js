@@ -12,6 +12,24 @@ const notesSchema = new mongoose.Schema(
       required: [true, "Note content is required"],
       trim: true,
     },
+    mood: {
+      type: String,
+      default: "😊",
+    },
+    location: {
+      type: String,
+      default: "Untethered",
+    },
+    imageUrl: {
+      type: String,
+    },
+    coverUrl: {
+      type: String,
+    },
+    weather: {
+      type: String,
+      default: "☀️",
+    }
   },
   {
     timestamps: true,

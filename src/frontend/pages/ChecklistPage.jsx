@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { Plus, Check, Trash2, Link as LinkIcon, RefreshCw, Sliders } from "lucide-react";
 import { getChecklist, createChecklist, updateChecklist } from "../services/checklist.service";
 
 const TRIP_ID = "507f1f77bcf86cd799439011";
@@ -47,9 +48,9 @@ const ChecklistPage = () => {
       }
       setChecklist(response.data);
       localStorage.setItem(`checklist_${TRIP_ID}`, JSON.stringify(response.data.items));
-      toast.success("Added to itinerary");
+      toast.success("Essential added");
     } catch (err) {
-      toast.error("Cloud sync failed");
+      toast.error("Sync failed");
     } finally {
       setIsSyncing(false);
     }
@@ -74,81 +75,78 @@ const ChecklistPage = () => {
     } catch (err) {}
   };
 
-  if (loading) return <div className="flex items-center justify-center min-h-[60vh]"><div className="w-10 h-10 border-2 border-white/10 border-t-white rounded-full animate-spin"></div></div>;
+  if (loading) return <div className="flex items-center justify-center min-h-[60vh]"><div className="w-10 h-10 border-2 border-slate-200 border-t-blue-600 rounded-full animate-spin"></div></div>;
 
   const packedCount = items.filter(i => i.packed).length;
   const progress = items.length > 0 ? (packedCount / items.length) * 100 : 0;
 
   return (
-    <div className="animate-in fade-in slide-in-from-bottom-6 duration-1000">
+    <div className="animate-in fade-in slide-in-from-bottom-4 duration-1000">
       
-      {/* Professional Hero Section */}
-      <section className="py-16 text-center max-w-4xl mx-auto px-4">
-        <span className="inline-block text-xs font-bold text-blue-500 uppercase tracking-[0.4em] mb-4">Itinerary Planner</span>
-        <h1 className="text-6xl font-black text-white tracking-tighter leading-[0.9] mb-8">
+      {/* Light Hero Section */}
+      <section className="py-20 text-center max-w-4xl mx-auto px-8">
+        <span className="inline-block text-[10px] font-bold text-blue-600 uppercase tracking-[0.4em] mb-6">Preparation Suite</span>
+        <h1 className="text-5xl font-semibold text-slate-900 tracking-tight leading-none mb-10">
           Trip Essentials
         </h1>
         
-        <p className="text-sm font-medium text-white/40 mb-10">
-          {items.length} Items • <span className="text-blue-400">{Math.round(progress)}% Packed</span>
+        <p className="text-lg text-slate-500 font-medium leading-relaxed max-w-2xl mx-auto mb-12">
+          {items.length} items catalogued • <span className="text-blue-600 font-bold">{Math.round(progress)}% prepared</span>
         </p>
 
-        {/* Compact Input Dock */}
-        <div className="max-w-xl mx-auto relative group">
+        {/* Clean Input Interface */}
+        <div className="max-w-xl mx-auto relative">
           <input
             value={text}
             onChange={(e) => setText(e.target.value)}
             onKeyPress={(e) => e.key === "Enter" && handleAddItem()}
-            placeholder="Passport, charger, sunglasses..."
-            className="w-full h-16 px-6 rounded-2xl bg-white/5 backdrop-blur-3xl border border-white/10 text-xl font-bold text-white placeholder:text-white/10 focus:bg-white/10 focus:ring-4 focus:ring-blue-600/20 outline-none transition-all duration-300"
+            placeholder="What else do you need?"
+            className="w-full h-16 px-8 rounded-3xl bg-slate-100 border border-slate-200 text-lg font-medium text-slate-900 placeholder:text-slate-400 focus:bg-white focus:ring-4 focus:ring-blue-600/5 outline-none transition-all duration-300"
           />
           <button 
             onClick={handleAddItem}
             disabled={!text.trim() || isSyncing}
-            className="absolute right-2 top-2 bottom-2 px-6 rounded-xl bg-blue-600 text-white font-black text-xs hover:bg-blue-500 active:scale-95 transition-all shadow-lg shadow-blue-900/20"
+            className="absolute right-2 top-2 bottom-2 px-8 rounded-2xl bg-blue-600 text-white font-bold text-xs uppercase tracking-widest hover:bg-blue-700 active:scale-95 transition-all shadow-lg shadow-blue-600/20"
           >
-            ADD
+            Add
           </button>
         </div>
       </section>
 
-      {/* Modern Chip Grid */}
-      <section className="max-w-6xl mx-auto px-8 pb-32">
+      {/* Grid Canvas */}
+      <section className="max-w-6xl mx-auto px-10 pb-40">
         {items.length === 0 ? (
-          <div className="text-center py-20 bg-white/[0.02] border border-dashed border-white/5 rounded-3xl">
-             <h3 className="text-lg font-bold text-white/60 mb-1">Your journey starts here.</h3>
-             <p className="text-xs text-white/20 uppercase tracking-widest font-black">Build your perfect trip</p>
+          <div className="text-center py-24 bg-slate-50 border-2 border-dashed border-slate-200 rounded-[32px]">
+             <h3 className="text-xl font-semibold text-slate-900 mb-2">Your list is empty.</h3>
+             <p className="text-sm text-slate-400 font-medium">Start building your perfect journey.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {items.map((item, index) => (
               <div 
                 key={index}
                 onClick={() => togglePacked(index)}
-                className={`travel-chip group flex flex-col justify-between h-40 ${item.packed ? "bg-blue-600 border-blue-500" : ""}`}
+                className={`travel-chip group flex flex-col justify-between h-44 ${item.packed ? "bg-blue-600 border-blue-600 shadow-blue-200" : ""}`}
               >
                 <div className="flex items-start justify-between">
-                  <span className={`text-xl ${item.packed ? "grayscale-0" : "grayscale opacity-20"}`}>✈️</span>
-                  <div className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all ${item.packed ? "bg-white border-white text-blue-600" : "border-white/10"}`}>
-                     {item.packed && <span className="font-bold text-[10px]">✓</span>}
+                  <div className={`w-10 h-10 rounded-2xl flex items-center justify-center text-lg transition-all ${item.packed ? "bg-white/20 text-white" : "bg-slate-100 text-slate-400"}`}>
+                     {item.packed ? <Check size={20} strokeWidth={3} /> : <Plus size={20} />}
                   </div>
+                  <button 
+                    onClick={(e) => { e.stopPropagation(); removeItem(index); }}
+                    className={`p-2 rounded-xl transition-all ${item.packed ? "hover:bg-white/10 text-white/40 hover:text-white" : "hover:bg-rose-50 text-slate-200 hover:text-rose-500"}`}
+                  >
+                    <Trash2 size={16} />
+                  </button>
                 </div>
                 
                 <div className="space-y-1">
-                  <h4 className={`text-lg font-bold tracking-tight truncate ${item.packed ? "text-white" : "text-white"}`}>
+                  <h4 className={`text-lg font-semibold tracking-tight truncate ${item.packed ? "text-white" : "text-slate-900"}`}>
                     {item.text}
                   </h4>
-                  <div className="flex items-center justify-between">
-                    <span className={`text-[9px] font-black uppercase tracking-widest ${item.packed ? "text-white/60" : "text-white/20"}`}>
-                      {item.packed ? "Ready" : "Pending"}
-                    </span>
-                    <button 
-                      onClick={(e) => { e.stopPropagation(); removeItem(index); }}
-                      className={`text-sm opacity-0 group-hover:opacity-100 transition-opacity ${item.packed ? "text-white/40 hover:text-white" : "text-white/10 hover:text-rose-500"}`}
-                    >
-                      🗑️
-                    </button>
-                  </div>
+                  <span className={`text-[10px] font-bold uppercase tracking-widest ${item.packed ? "text-white/60" : "text-slate-400"}`}>
+                    {item.packed ? "Prepared" : "Pending"}
+                  </span>
                 </div>
               </div>
             ))}
@@ -156,21 +154,21 @@ const ChecklistPage = () => {
         )}
       </section>
 
-      {/* Compact Bottom Strip */}
-      <section className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50">
-         <div className="flex items-center gap-1.5 p-1.5 bg-slate-900/90 backdrop-blur-3xl rounded-2xl border border-white/5 shadow-2xl">
+      {/* Floating Productivity Strip */}
+      <section className="fixed bottom-10 left-1/2 -translate-x-1/2 z-50">
+         <div className="flex items-center gap-1.5 p-1.5 bg-white shadow-[0_20px_50px_rgba(15,23,42,0.1)] rounded-3xl border border-slate-200/60">
             {[
-              { label: "Share", icon: "🔗", action: () => { navigator.clipboard.writeText(window.location.href); toast.success("Link copied!"); } },
-              { label: "Sync", icon: "☁️", action: () => fetchChecklist(true) },
-              { label: "Preferences", icon: "⚙️", action: () => toast("Settings coming soon!") }
+              { label: "Share Link", icon: <LinkIcon size={16} />, action: () => { navigator.clipboard.writeText(window.location.href); toast.success("Link copied!"); } },
+              { label: "Sync Cloud", icon: <RefreshCw size={16} />, action: () => fetchChecklist(true) },
+              { label: "View Modes", icon: <Sliders size={16} />, action: () => toast("Filters coming soon") }
             ].map((tool, i) => (
               <button 
                 key={i}
                 onClick={tool.action}
-                className="flex items-center gap-2 px-5 py-2.5 rounded-xl hover:bg-white/5 text-white transition-all group"
+                className="flex items-center gap-2.5 px-6 py-3 rounded-2xl hover:bg-slate-50 text-slate-600 hover:text-slate-900 transition-all group"
               >
-                <span className="text-base group-hover:scale-110 transition-transform">{tool.icon}</span>
-                <span className="text-[9px] font-black uppercase tracking-widest leading-none hidden sm:block">{tool.label}</span>
+                <span className="group-hover:scale-110 transition-transform">{tool.icon}</span>
+                <span className="text-[10px] font-bold uppercase tracking-widest hidden sm:block">{tool.label}</span>
               </button>
             ))}
          </div>

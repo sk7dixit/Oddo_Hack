@@ -1,74 +1,43 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import {
-  IoClipboardOutline,
-  IoBookOutline,
-  IoShareSocialOutline,
-} from "react-icons/io5";
+  Clipboard,
+  Book,
+  Share2,
+} from "lucide-react";
 
 const items = [
   {
     title: "Checklist",
     path: "/checklist",
-    icon: <IoClipboardOutline />,
-    color: "from-violet-500 to-fuchsia-500",
+    icon: <Clipboard size={18} />,
   },
   {
     title: "Journal",
     path: "/notes",
-    icon: <IoBookOutline />,
-    color: "from-cyan-400 to-blue-500",
+    icon: <Book size={18} />,
   },
   {
     title: "Share",
     path: "/public/507f1f77bcf86cd799439011",
-    icon: <IoShareSocialOutline />,
-    color: "from-orange-400 to-pink-500",
+    icon: <Share2 size={18} />,
   },
 ];
 
 export default function FloatingDock() {
   return (
-    <div className="flex items-center gap-2 p-1.5 bg-white/5 backdrop-blur-3xl rounded-full border border-white/10 shadow-2xl">
+    <div className="flex items-center gap-1 p-1 bg-slate-200/40 backdrop-blur-md rounded-full border border-slate-200/50">
       {items.map((item, index) => (
         <NavLink
           key={index}
           to={item.path}
           className={({ isActive }) => `
-            relative group flex items-center h-11 w-11 hover:w-36 
-            rounded-full transition-all duration-500 overflow-hidden 
-            ${isActive ? "bg-white/10 shadow-lg" : "bg-transparent"}
+            nav-tab flex items-center gap-2.5 px-6 py-2.5 
+            ${isActive ? "nav-tab-active" : "nav-tab-inactive"}
           `}
         >
-          {/* Active/Hover Gradient Layer */}
-          <div
-            className={`
-              absolute inset-0 bg-gradient-to-r ${item.color}
-              opacity-0 group-hover:opacity-100 transition-all duration-500
-            `}
-          />
-
-          {/* Icon Stage */}
-          <div
-            className="
-              relative z-10 flex items-center justify-center 
-              min-w-[44px] text-lg text-white/50
-              group-hover:text-white transition-all duration-500
-            "
-          >
-            {item.icon}
-          </div>
-
-          {/* Label Stage */}
-          <span
-            className="
-              relative z-10 whitespace-nowrap text-white font-bold text-[10px] uppercase tracking-widest
-              opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0
-              transition-all duration-500 pr-5
-            "
-          >
-            {item.title}
-          </span>
+          <span className="opacity-80">{item.icon}</span>
+          <span className="font-semibold tracking-tight">{item.title}</span>
         </NavLink>
       ))}
     </div>
