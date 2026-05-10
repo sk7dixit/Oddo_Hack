@@ -1,12 +1,26 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
+// Global Error Handlers
+process.on("uncaughtException", (err) => {
+  console.error("UNCAUGHT EXCEPTION:", err);
+});
+
+process.on("unhandledRejection", (err) => {
+  console.error("UNHANDLED REJECTION:", err);
+});
+
 import express from 'express';
 import cors from 'cors';
 import fs from 'fs';
 import path from 'path';
 import userRoutes from './routes/userRoutes.js';
 import tripRoutes from './routes/tripRoutes.js';
+// import authRoutes from './routes/authRoutes.js';
+// import budgetRoutes from './routes/budgetRoutes.js';
+// import adminRoutes from './routes/adminRoutes.js';
+// import notesRoutes from './routes/notesRoutes.js';
+// import checklistRoutes from './routes/checklistRoutes.js';
 
 const logFile = path.join(process.cwd(), 'debug.log');
 const logStream = fs.createWriteStream(logFile, { flags: 'a' });
@@ -20,6 +34,12 @@ const log = (msg: string) => {
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// Request Logging Middleware
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+  next();
+});
+
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -30,8 +50,13 @@ app.use((req, res, next) => {
 });
 
 // Routes
+// app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/trips', tripRoutes);
+// app.use('/api/budget', budgetRoutes);
+// app.use('/api/admin', adminRoutes);
+// app.use('/api/notes', notesRoutes);
+// app.use('/api/checklist', checklistRoutes);
 
 // Error Handler
 app.use((err: any, req: any, res: any, next: any) => {

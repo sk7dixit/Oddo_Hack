@@ -18,6 +18,14 @@ const ensureMockUser = async () => {
   }
 };
 
+import fs from 'fs';
+import path from 'path';
+
+const logError = (error: any) => {
+  const logMsg = `[${new Date().toISOString()}] DATABASE ERROR: ${JSON.stringify(error, Object.getOwnPropertyNames(error))}\n`;
+  fs.appendFileSync(path.join(process.cwd(), 'error.log'), logMsg);
+};
+
 export const tripController = {
   getAllTrips: async (req: Request, res: Response) => {
     try {
@@ -25,7 +33,7 @@ export const tripController = {
       const trips = await tripService.getAllTrips(MOCK_USER_ID);
       res.status(200).json(trips);
     } catch (error: any) {
-      console.log("DATABASE ERROR:", error);
+      logError(error);
       console.error("Trip Fetch Error:", error);
       res.status(500).json({ error: 'Failed to fetch trips' });
     }
