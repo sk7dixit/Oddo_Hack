@@ -84,29 +84,29 @@ const ChecklistPage = () => {
     <div className="animate-in fade-in slide-in-from-bottom-4 duration-1000">
       
       {/* Light Hero Section */}
-      <section className="py-20 text-center max-w-4xl mx-auto px-8">
-        <span className="inline-block text-[10px] font-bold text-blue-600 uppercase tracking-[0.4em] mb-6">Preparation Suite</span>
-        <h1 className="text-5xl font-semibold text-slate-900 tracking-tight leading-none mb-10">
+      <section className="py-12 md:py-20 text-center max-w-4xl mx-auto px-8">
+        <span className="inline-block text-[10px] font-bold text-blue-600 uppercase tracking-[0.4em] mb-4 md:mb-6">Preparation Suite</span>
+        <h1 className="text-3xl md:text-5xl font-semibold text-slate-900 tracking-tight leading-none mb-6 md:mb-10">
           Trip Essentials
         </h1>
         
-        <p className="text-lg text-slate-500 font-medium leading-relaxed max-w-2xl mx-auto mb-12">
+        <p className="text-base md:text-lg text-slate-500 font-medium leading-relaxed max-w-2xl mx-auto mb-8 md:mb-12">
           {items.length} items catalogued • <span className="text-blue-600 font-bold">{Math.round(progress)}% prepared</span>
         </p>
 
         {/* Clean Input Interface */}
-        <div className="max-w-xl mx-auto relative">
+        <div className="max-w-xl mx-auto relative px-2">
           <input
             value={text}
             onChange={(e) => setText(e.target.value)}
             onKeyPress={(e) => e.key === "Enter" && handleAddItem()}
             placeholder="What else do you need?"
-            className="w-full h-16 px-8 rounded-3xl bg-slate-100 border border-slate-200 text-lg font-medium text-slate-900 placeholder:text-slate-400 focus:bg-white focus:ring-4 focus:ring-blue-600/5 outline-none transition-all duration-300"
+            className="w-full h-14 md:h-16 px-6 md:px-8 rounded-2xl md:rounded-3xl bg-slate-100 border border-slate-200 text-base md:text-lg font-medium text-slate-900 placeholder:text-slate-400 focus:bg-white focus:ring-4 focus:ring-blue-600/5 outline-none transition-all duration-300"
           />
           <button 
             onClick={handleAddItem}
             disabled={!text.trim() || isSyncing}
-            className="absolute right-2 top-2 bottom-2 px-8 rounded-2xl bg-blue-600 text-white font-bold text-xs uppercase tracking-widest hover:bg-blue-700 active:scale-95 transition-all shadow-lg shadow-blue-600/20"
+            className="absolute right-4 top-2 bottom-2 px-4 md:px-8 rounded-xl md:rounded-2xl bg-blue-600 text-white font-bold text-[10px] md:text-xs uppercase tracking-widest hover:bg-blue-700 active:scale-95 transition-all shadow-lg shadow-blue-600/20"
           >
             Add
           </button>
@@ -165,10 +165,10 @@ const ChecklistPage = () => {
               <button 
                 key={i}
                 onClick={tool.action}
-                className="flex items-center gap-2.5 px-6 py-3 rounded-2xl hover:bg-slate-50 text-slate-600 hover:text-slate-900 transition-all group"
+                className="flex items-center gap-2 px-4 md:px-6 py-2.5 md:py-3 rounded-2xl hover:bg-slate-50 text-slate-600 hover:text-slate-900 transition-all group"
               >
                 <span className="group-hover:scale-110 transition-transform">{tool.icon}</span>
-                <span className="text-[10px] font-bold uppercase tracking-widest hidden sm:block">{tool.label}</span>
+                <span className="text-[10px] font-bold uppercase tracking-widest hidden md:block">{tool.label}</span>
               </button>
             ))}
          </div>

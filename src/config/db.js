@@ -6,8 +6,7 @@ const connectDB = async () => {
 
     console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
-    console.log(`Error: ${error.message}`);
-    process.exit(1);
+    console.log(`⚠️ Database Warning: ${error.message}. Running in volatile mode.`);
   }
 };
 

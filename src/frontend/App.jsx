@@ -5,18 +5,22 @@ import ChecklistPage from "./pages/ChecklistPage";
 import NotesPage from "./pages/NotesPage";
 import PublicTripPage from "./pages/PublicTripPage";
 import NotFound from "./pages/NotFound";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
-    <Routes>
-      <Route element={<Layout />}>
-        <Route path="/" element={<ChecklistPage />} />
-        <Route path="/checklist" element={<ChecklistPage />} />
-        <Route path="/notes" element={<NotesPage />} />
-      </Route>
-      <Route path="/public/:tripId" element={<PublicTripPage />} />
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+    <>
+      <Toaster position="top-center" />
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/" element={<ChecklistPage />} />
+          <Route path="/checklist" element={<ChecklistPage />} />
+          <Route path="/notes" element={<NotesPage />} />
+        </Route>
+        <Route path="/public/:tripId" element={<PublicTripPage />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </>
   );
 }
 

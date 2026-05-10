@@ -1,8 +1,8 @@
 import axios from "axios";
 
 // Using credentials from .env
-const CLOUDINARY_UPLOAD_PRESET = "traveloop"; 
-const CLOUDINARY_CLOUD_NAME = "dtcraqye8";
+const CLOUDINARY_UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET; 
+const CLOUDINARY_CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
 
 export const uploadImage = async (file) => {
   const formData = new FormData();
@@ -16,7 +16,7 @@ export const uploadImage = async (file) => {
     );
     return response.data.secure_url;
   } catch (error) {
-    console.error("Cloudinary Upload Error:", error);
+    console.error("Cloudinary Upload Error Details:", error.response?.data || error.message);
     throw error;
   }
 };

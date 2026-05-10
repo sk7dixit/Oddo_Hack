@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { Image as ImageIcon, MapPin, Smile, Send, Sparkles, Flame, Plus, X } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Image as ImageIcon, MapPin, Smile, Send, Sparkles, Flame, Plus, X, Share2 } from "lucide-react";
 import { getNotes, createNote } from "../services/notes.service";
 import { uploadImage } from "../services/upload.service";
 
@@ -59,6 +60,7 @@ const NotesPage = () => {
     const tempId = Date.now().toString();
     const newNote = {
       _id: tempId,
+      tripId: TRIP_ID,
       content: content.trim(),
       createdAt: new Date().toISOString(),
       isOptimistic: true,
@@ -100,11 +102,25 @@ const NotesPage = () => {
     <div className="animate-in fade-in slide-in-from-bottom-4 duration-1000 max-w-7xl mx-auto px-10 pb-40">
       
       {/* 1. Soft Editorial Header */}
-      <header className="mb-16">
-        <h1 className="text-5xl font-semibold text-slate-900 tracking-tight mb-4">Capture Your Journey</h1>
-        <p className="text-lg text-slate-500 font-medium max-w-2xl leading-relaxed">
-          Document experiences, thoughts, and fleeting memories from every destination in your own reflective space.
-        </p>
+      <header className="mb-8 md:mb-16 flex items-center justify-between gap-10">
+        <div className="max-w-2xl">
+          <h1 className="text-3xl md:text-5xl font-semibold text-slate-900 tracking-tight mb-0 md:mb-4">Capture Your Journey</h1>
+          <p className="hidden md:block text-lg text-slate-500 font-medium leading-relaxed">
+            Document experiences, thoughts, and fleeting memories from every destination in your own reflective space.
+          </p>
+        </div>
+        <div className="flex flex-col items-end gap-3">
+          <Link 
+            to={`/public/${TRIP_ID}`} 
+            className="shrink-0 flex items-center gap-2.5 px-10 py-5 bg-blue-600 text-white rounded-[1.5rem] text-[11px] font-black uppercase tracking-[0.2em] hover:bg-slate-900 hover:scale-[1.02] active:scale-95 transition-all shadow-2xl shadow-blue-600/20 group"
+          >
+            <Share2 size={16} strokeWidth={2.5} className="group-hover:rotate-12 transition-transform" />
+            Share Story
+          </Link>
+          <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest mr-2">
+            {notes.length} {notes.length === 1 ? 'Memory' : 'Memories'} Ready to Publish
+          </p>
+        </div>
       </header>
 
       {/* 2. Light Interaction Grid */}
@@ -126,30 +142,30 @@ const NotesPage = () => {
             )}
 
             {/* Floating Editorial Toolbar */}
-            <div className="px-10 py-6 border-b border-slate-200/60 flex flex-wrap items-center gap-4">
-              <label className="flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 transition-all cursor-pointer group">
+            <div className="px-6 md:px-10 py-4 md:py-6 border-b border-slate-200/60 flex flex-wrap items-center gap-3 md:gap-4">
+              <label className="flex items-center gap-2.5 px-4 md:px-5 py-2 md:py-2.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 transition-all cursor-pointer group">
                 <ImageIcon size={16} />
-                <span className="text-xs font-semibold">{coverUrl ? "Change Cover" : "Add Cover"}</span>
+                <span className="text-xs font-semibold hidden md:inline">{coverUrl ? "Change Cover" : "Add Cover"}</span>
                 <input type="file" className="hidden" accept="image/*" onChange={(e) => handleImageUpload(e, "cover")} />
               </label>
 
-              <label className="flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 transition-all cursor-pointer group">
+              <label className="flex items-center gap-2.5 px-4 md:px-5 py-2 md:py-2.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 transition-all cursor-pointer group">
                 <Sparkles size={16} />
-                <span className="text-xs font-semibold">Attach Memory</span>
+                <span className="text-xs font-semibold hidden md:inline">Attach Memory</span>
                 <input type="file" className="hidden" accept="image/*" onChange={(e) => handleImageUpload(e, "memory")} />
               </label>
 
-              <div className="flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-slate-100 border border-transparent focus-within:bg-white focus-within:border-slate-200 transition-all">
+              <div className="flex items-center gap-2.5 px-4 md:px-5 py-2 md:py-2.5 rounded-full bg-slate-100 border border-transparent focus-within:bg-white focus-within:border-slate-200 transition-all">
                 <MapPin size={16} className="text-slate-400" />
                 <input 
                   placeholder="Location" 
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
-                  className="bg-transparent border-none text-xs font-semibold text-slate-700 p-0 focus:ring-0 w-28 placeholder:text-slate-400"
+                  className="bg-transparent border-none text-xs font-semibold text-slate-700 p-0 focus:ring-0 w-20 md:w-28 placeholder:text-slate-400"
                 />
               </div>
 
-              <div className="flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-slate-100">
+              <div className="flex items-center gap-2.5 px-4 md:px-5 py-2 md:py-2.5 rounded-full bg-slate-100">
                 <Smile size={16} className="text-slate-400" />
                 <select 
                   value={mood}
@@ -167,11 +183,15 @@ const NotesPage = () => {
             {/* Inline Memory Preview */}
             {imageUrl && (
               <div className="px-10 pt-10 group relative">
-                <div className="relative aspect-video rounded-[24px] overflow-hidden border border-slate-200/60 shadow-lg">
-                  <img src={imageUrl} alt="Memory" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" />
-                  <button onClick={() => setImageUrl("")} className="absolute top-4 right-4 bg-white/60 backdrop-blur-md p-2 rounded-full text-slate-900/60 hover:text-slate-900 shadow-sm transition-colors">
-                     <X size={16} />
+                <div className="relative h-52 rounded-[32px] overflow-hidden border border-slate-200/60 shadow-2xl transition-all duration-700 group-hover:shadow-blue-500/10">
+                  <img src={imageUrl} alt="Memory" className="w-full h-full object-cover transition-transform duration-[2000ms] group-hover:scale-110" />
+                  <button 
+                    onClick={() => setImageUrl("")} 
+                    className="absolute top-6 right-6 bg-white/80 backdrop-blur-xl p-3 rounded-full text-slate-900 shadow-2xl hover:bg-white hover:scale-110 transition-all z-10"
+                  >
+                     <X size={20} />
                   </button>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                 </div>
               </div>
             )}
@@ -179,16 +199,16 @@ const NotesPage = () => {
             <textarea
               value={content}
               onChange={(e) => setContent(e.target.value)}
-              placeholder="What's on your mind today?"
-              className="w-full min-h-[380px] p-12 bg-transparent outline-none resize-none text-lg leading-8 font-normal text-slate-700 placeholder:text-slate-400 transition-all"
+              placeholder="What's on your mind today? &#10;Today I discovered... &#10;A moment I want to remember..."
+              className="w-full min-h-[300px] md:min-h-[380px] p-8 md:p-12 bg-transparent outline-none resize-none text-base md:text-lg leading-8 font-normal text-slate-700 placeholder:text-slate-400 transition-all"
             />
 
-            <div className="px-12 py-10 bg-slate-50/50 flex items-center justify-between border-t border-slate-200/60">
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">Syncing to Traveloop Cloud</span>
+            <div className="px-8 md:px-12 py-6 md:py-10 bg-slate-50/50 flex items-center justify-between border-t border-slate-200/60">
+              <span className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] hidden sm:inline">Syncing to Traveloop Cloud</span>
               <button 
                 onClick={handleAddNote}
                 disabled={!content.trim() || isSaving || isUploading}
-                className="flex items-center gap-3 px-10 h-14 rounded-2xl bg-blue-600 text-white font-bold text-xs uppercase tracking-widest hover:bg-blue-700 hover:scale-[1.02] active:scale-95 transition-all shadow-xl shadow-blue-600/20 disabled:opacity-50"
+                className="flex items-center gap-3 px-6 md:px-10 h-11 md:h-14 rounded-2xl bg-blue-600 text-white font-bold text-[10px] md:text-xs uppercase tracking-widest hover:bg-blue-700 hover:scale-[1.02] active:scale-95 transition-all shadow-xl shadow-blue-600/20 disabled:opacity-50"
               >
                 {isSaving ? "Archiving..." : "Archive Entry"}
                 <Send size={14} />
