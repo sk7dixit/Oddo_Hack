@@ -3,34 +3,32 @@ import { NavLink } from "react-router-dom";
 
 const Sidebar = ({ tripId = "507f1f77bcf86cd799439011" }) => {
   const menuItems = [
-    { label: "Checklist", icon: "🎒", path: "/" },
+    { label: "Checklist", icon: "🎒", path: "/checklist" },
     { label: "Journal", icon: "✍️", path: "/notes" },
-    { label: "Shared Page", icon: "🔗", path: `/public/${tripId}` },
   ];
 
   return (
-    <aside className="w-72 h-full bg-white border-r border-slate-100 flex flex-col py-10 shadow-sm z-20">
-      <div className="px-10 mb-12 flex items-center gap-4">
-        <div className="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center text-white text-2xl shadow-lg shadow-blue-100">
+    <div className="h-full flex flex-col p-8">
+      {/* Branding */}
+      <div className="flex items-center gap-3 mb-12">
+        <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white text-xl shadow-lg shadow-blue-200">
           ✈️
         </div>
-        <span className="text-2xl font-black text-slate-800 tracking-tighter">Traveloop</span>
+        <span className="text-2xl font-black text-slate-800">Traveloop</span>
       </div>
 
-      <nav className="flex-1 px-4 space-y-2">
-        <div className="px-6 mb-4">
-          <h2 className="text-[10px] font-black text-slate-300 uppercase tracking-[0.2em]">Dashboard</h2>
-        </div>
+      {/* Nav Section */}
+      <nav className="flex-1 space-y-2">
+        <h2 className="text-[10px] font-black text-slate-300 uppercase tracking-widest mb-4 px-2">Main Menu</h2>
         {menuItems.map((item) => (
           <NavLink
             key={item.label}
             to={item.path}
             className={({ isActive }) => `
-              flex items-center gap-4 px-6 py-4 text-sm font-bold transition-all rounded-2xl
+              flex items-center gap-4 px-5 py-4 rounded-2xl font-bold transition-all
               ${isActive 
-                ? "text-blue-600 bg-blue-50/50 shadow-sm" 
-                : "text-slate-400 hover:text-slate-600 hover:bg-slate-50"
-              }
+                ? "bg-blue-600 text-white shadow-xl shadow-blue-100" 
+                : "text-slate-400 hover:bg-slate-50 hover:text-slate-600"}
             `}
           >
             <span className="text-xl">{item.icon}</span>
@@ -39,15 +37,17 @@ const Sidebar = ({ tripId = "507f1f77bcf86cd799439011" }) => {
         ))}
       </nav>
 
-      <div className="px-8 mt-auto">
-        <div className="p-6 bg-blue-600 rounded-[2rem] text-white shadow-xl shadow-blue-200">
-          <p className="text-[10px] font-black opacity-60 mb-2 uppercase tracking-widest">Hackathon Mode</p>
-          <p className="text-xs font-bold leading-relaxed">
-            Sharing enabled. All changes sync in real-time.
-          </p>
-        </div>
+      {/* Sharing Footer */}
+      <div className="mt-auto">
+        <NavLink 
+          to={`/public/${tripId}`}
+          className="block p-5 bg-slate-900 rounded-[2rem] text-white hover:bg-slate-800 transition-all shadow-lg"
+        >
+          <p className="text-[10px] font-black opacity-50 uppercase tracking-widest mb-1">Public Share</p>
+          <p className="text-xs font-bold">View Live Itinerary 🔗</p>
+        </NavLink>
       </div>
-    </aside>
+    </div>
   );
 };
 

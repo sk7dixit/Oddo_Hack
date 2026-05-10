@@ -84,7 +84,7 @@ const NotesPage = () => {
 
   return (
     <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">
-      <div className="max-w-4xl mx-auto space-y-16">
+      <div className="w-full space-y-16">
         
         <section>
           <Card className="p-0 overflow-hidden border-none shadow-[0_20px_50px_rgba(59,130,246,0.12)]">
