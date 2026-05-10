@@ -2,13 +2,17 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 import path from "path"
 >>>>>>> origin/auth-feature
+=======
+>>>>>>> origin/budget-feature
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+<<<<<<< HEAD
 <<<<<<< HEAD
   server: {
     proxy: {
@@ -40,3 +44,6 @@ export default defineConfig({
   ],
 })
 >>>>>>> origin/admin-feature
+=======
+})
+>>>>>>> origin/budget-feature

@@ -3,6 +3,7 @@
   "version": "1.0.0",
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -22,10 +23,17 @@
   "scripts": {
     "start": "ts-node-dev src/server.ts"
 >>>>>>> origin/admin-feature
+=======
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+>>>>>>> origin/budget-feature
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
   "description": "",
@@ -85,5 +93,21 @@
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.4.5"
 >>>>>>> origin/admin-feature
+=======
+  "dependencies": {
+    "@prisma/client": "^5.22.0",
+    "@types/node": "^25.6.2",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "prisma": "^5.22.0",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.3"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6"
+>>>>>>> origin/budget-feature
   }
 }

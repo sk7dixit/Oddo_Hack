@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "name": "frontend",
+=======
+  "name": "temp_frontend",
+>>>>>>> origin/budget-feature
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,6 +14,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     "axios": "^1.7.9",
@@ -48,6 +53,13 @@
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.5.0"
 >>>>>>> origin/admin-feature
+=======
+    "chart.js": "^4.5.1",
+    "react": "^19.2.5",
+    "react-chartjs-2": "^5.3.1",
+    "react-dom": "^19.2.5",
+    "recharts": "^3.8.1"
+>>>>>>> origin/budget-feature
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
@@ -56,18 +68,24 @@
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.1",
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     "autoprefixer": "^10.5.0",
 >>>>>>> origin/admin-feature
+=======
+>>>>>>> origin/budget-feature
     "eslint": "^10.2.1",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.5.0",
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     "postcss": "^8.5.14",
     "tailwindcss": "^4.3.0",
 >>>>>>> origin/admin-feature
+=======
+>>>>>>> origin/budget-feature
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.58.2",
     "vite": "^8.0.10"

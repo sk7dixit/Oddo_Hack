@@ -21,6 +21,7 @@
     "erasableSyntaxOnly": true,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "noFallthroughCasesInSwitch": true
 =======
     "noFallthroughCasesInSwitch": true,
@@ -34,6 +35,9 @@
 =======
     "noFallthroughCasesInSwitch": true
 >>>>>>> origin/admin-feature
+=======
+    "noFallthroughCasesInSwitch": true
+>>>>>>> origin/budget-feature
   },
   "include": ["src"]
 }

@@ -1,13 +1,14 @@
 import { Router } from 'express';
-import { getBudget, addExpense, searchActivities } from '../controllers/budgetController';
-import { protect } from '../middleware/authMiddleware';
+import { getActivities, calculateBudget, getBudgetSummary, createExpense } from '../controllers/budgetController';
 
 const router = Router();
 
-router.use(protect);
+// Activity Routes (Grouped under Budget module as per frontend design)
+router.get('/activities', getActivities);
 
-router.get('/activities', searchActivities);
-router.get('/:tripId', getBudget);
-router.post('/:tripId/expenses', addExpense);
+// Budget & Expense Routes
+router.post('/budget/calculate', calculateBudget);
+router.get('/budget', getBudgetSummary);
+router.post('/expenses', createExpense);
 
 export default router;

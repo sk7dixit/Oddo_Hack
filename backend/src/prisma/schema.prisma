@@ -4,61 +4,53 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
-model User {
-  id          String   @id @default(uuid())
-  email       String   @unique
-  name        String
-  bio         String?
-  avatar      String?
-  instagramId String?
-  facebookId  String?
-  trips       Trip[]
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+model Activity {
+  id            String   @id @default(uuid())
+  name          String
+  description   String
+  location      String
+  category      String
+  costPerPerson Float
+  duration      String
+  imageUrl      String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }
 
-enum TripStatus {
-  Planning
-  Confirmed
-  Draft
+model Budget {
+  id                 String   @id @default(uuid())
+  tripId             String
+  userId             String
+  totalTransportCost Float
+  totalHotelCost     Float
+  totalFoodCost      Float
+  totalActivityCost  Float
+  totalMiscCost      Float    @default(0)
+  totalBudget        Float
+  costPerDay         Float
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
 }
 
-model Trip {
-  id          String     @id @default(uuid())
-  title       String
-  description String?
-  startDate   DateTime
-  endDate     DateTime
-  status      TripStatus @default(Planning)
-  image       String?
-  userId      String
-  user        User       @relation(fields: [userId], references: [id])
-  stops       TripStop[]
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+enum ExpenseCategory {
+  Transport
+  Hotel
+  Food
+  Activity
+  Misc
 }
 
-model TripStop {
-  id            String    @id @default(uuid())
-  tripId        String
-  cityId        String
-  orderIndex    Int
-  arrivalDate   DateTime?
-  departureDate DateTime?
-  notes         String?
-  trip          Trip      @relation(fields: [tripId], references: [id], onDelete: Cascade)
-  city          City      @relation(fields: [cityId], references: [id])
-  createdAt     DateTime  @default(now())
-}
-
-model City {
-  id        String     @id @default(uuid())
-  name      String
-  country   String
-  state     String?
-  image     String?
-  stops     TripStop[]
-  createdAt DateTime   @default(now())
+model Expense {
+  id        String          @id @default(uuid())
+  tripId    String
+  title     String
+  category  ExpenseCategory
+  amount    Float
+  date      DateTime
+  notes     String?
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
 }
