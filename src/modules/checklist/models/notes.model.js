@@ -7,15 +7,18 @@ const notesSchema = new mongoose.Schema(
       ref: "Trip",
       required: true,
     },
-
     content: {
       type: String,
-      required: true,
+      required: [true, "Note content is required"],
+      trim: true,
     },
   },
   {
     timestamps: true,
   }
 );
+
+// Step 6: Model Optimization
+notesSchema.index({ tripId: 1 });
 
 export default mongoose.model("Notes", notesSchema);
