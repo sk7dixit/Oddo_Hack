@@ -1,20 +1,30 @@
 import axios from 'axios';
 
-const api = axios.create({
-  baseURL: '/api', // Using Vite proxy
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+
+export const apiClient = axios.create({
+  baseURL: API_URL,
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
-// Add error interceptor for better debugging
-api.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    const message = error.response?.data?.error || error.message || 'Something went wrong';
-    console.error('API Error:', message);
-    return Promise.reject(new Error(message));
+// Add a request interceptor for auth
+apiClient.interceptors.request.use((config) => {
+  const userEmail = localStorage.getItem('user_email');
+  if (userEmail) {
+    config.headers['X-User-Email'] = userEmail;
   }
-);
+  return config;
+});
 
-export default api;
+export const tripService = {
+  getAll: () => apiClient.get('/trips'),
+  create: (data: any) => apiClient.post('/trips/create', data),
+  getById: (id: string) => apiClient.get(`/trips/${id}`),
+};
+
+export const aiService = {
+  generateTrip: (prompt: string) => apiClient.post('/ai/generate-trip', { prompt }),
+  optimizeBudget: (data: any) => apiClient.post('/ai/optimize-budget', data),
+};

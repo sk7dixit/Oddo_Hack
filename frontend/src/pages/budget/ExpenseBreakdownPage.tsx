@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { getBudgetSummary } from '../../services/budgetService';
+import { getBudgetSummary } from '@/services/budgetService';
+
 
 const ExpenseBreakdownPage: React.FC = () => {
   const [tripId, setTripId] = useState('test_trip_id');

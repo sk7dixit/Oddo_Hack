@@ -9,7 +9,8 @@ import TripsChart from "../../components/admin/TripsChart";
 import TopCitiesChart from "../../components/admin/TopCitiesChart";
 import DashboardSkeleton from "../../components/admin/DashboardSkeleton";
 import PageHeader from "../../components/admin/PageHeader";
-import { getDashboardStats } from "../../services/adminService";
+import { getDashboardStats } from "@/services/adminService";
+
 import type { DashboardStats } from "../../types/admin";
 
 const AdminDashboardPage = () => {

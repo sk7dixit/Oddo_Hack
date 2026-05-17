@@ -1,25 +1,21 @@
 import axios from 'axios';
-import { useAuth, useUser } from '@clerk/clerk-react';
 import { useEffect } from 'react';
+import { useAuth } from '../context/AuthContext';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 /**
- * Sync Clerk user with backend database
+ * Sync user with backend database
  */
-export const syncUserWithDatabase = async (token: string, user: any) => {
+export const syncUserWithDatabase = async (user: any) => {
   try {
     const response = await axios.post(
       `${API_URL}/auth/sync-user`,
       {
-        email: user.primaryEmailAddress?.emailAddress,
-        name: user.fullName || user.firstName || '',
-        profileImage: user.imageUrl,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        email: user.email,
+        name: user.name,
+        profileImage: user.image,
+        mobileNumber: user.mobileNumber
       }
     );
     return response.data;
@@ -30,26 +26,21 @@ export const syncUserWithDatabase = async (token: string, user: any) => {
 };
 
 /**
- * A custom hook you can use in your layout or protected route 
- * to ensure the user is synced after login/signup.
+ * A custom hook to ensure the user is synced after profile completion.
  */
 export const useSyncUser = () => {
-  const { getToken, isLoaded, isSignedIn } = useAuth();
-  const { user } = useUser();
+  const { user } = useAuth();
 
   useEffect(() => {
     const syncUser = async () => {
-      if (isLoaded && isSignedIn && user) {
+      if (user && user.profileCompleted) {
         try {
-          const token = await getToken();
-          if (token) {
-            await syncUserWithDatabase(token, user);
-          }
+          await syncUserWithDatabase(user);
         } catch (error) {
           console.error("Failed to sync user", error);
         }
       }
     };
     syncUser();
-  }, [isLoaded, isSignedIn, user, getToken]);
+  }, [user]);
 };

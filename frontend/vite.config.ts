@@ -1,20 +1,31 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
+import tailwindcss from '@tailwindcss/vite'
 import path from "path"
->>>>>>> origin/auth-feature
-=======
->>>>>>> origin/budget-feature
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
-<<<<<<< HEAD
-<<<<<<< HEAD
+  plugins: [
+    react({
+      jsxRuntime: 'automatic'
+    }),
+    tailwindcss(),
+  ],
+
+  optimizeDeps: {
+    include: ['recharts', 'framer-motion', 'lucide-react', 'react-is', 'canvas-confetti'],
+  },
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+    },
+  },
   server: {
+    port: 5182,
+    strictPort: false,
+    fs: {
+      allow: ['..']
+    },
     proxy: {
       '/api': {
         target: 'http://127.0.0.1:5000',
@@ -23,27 +34,5 @@ export default defineConfig({
       },
     },
   },
-})
-=======
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
-    },
-  },
-})
 
->>>>>>> origin/auth-feature
-=======
-import tailwindcss from '@tailwindcss/vite'
-
-// https://vite.dev/config/
-export default defineConfig({
-  plugins: [
-    react(),
-    tailwindcss(),
-  ],
 })
->>>>>>> origin/admin-feature
-=======
-})
->>>>>>> origin/budget-feature

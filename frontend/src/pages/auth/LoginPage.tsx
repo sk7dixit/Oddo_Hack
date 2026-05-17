@@ -7,7 +7,8 @@ export default function LoginPage() {
     <div className="auth-container">
       <div className="auth-bg-layer" style={{ backgroundImage: `url(${bgImage})` }} />
       <div className="auth-card-wrapper">
-        <SignIn />
+        <SignIn fallbackRedirectUrl="/trips" signUpFallbackRedirectUrl="/trips" />
+
       </div>
     </div>
   );

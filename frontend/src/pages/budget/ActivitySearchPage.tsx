@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { fetchActivities } from '../../services/budgetService';
+import { fetchActivities } from '@/services/budgetService';
+
 import { useBudget } from '../../context/BudgetContext';
 import ActivityDetailsModal from '../../components/budget/ActivityDetailsModal';
 

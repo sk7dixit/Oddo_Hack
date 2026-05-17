@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useBudget } from '../../context/BudgetContext';
-import { calculateBudget } from '../../services/budgetService';
+import { calculateBudget } from '@/services/budgetService';
+
 
 const BudgetPage: React.FC = () => {
   const { 

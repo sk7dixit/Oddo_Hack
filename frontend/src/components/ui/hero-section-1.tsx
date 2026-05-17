@@ -1,11 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { SignedIn, SignedOut, UserButton } from '@clerk/clerk-react'
-import { ArrowRight, ChevronRight, Menu, X, MapPin, Plane, Globe, Compass, Calendar, Users, Search } from 'lucide-react'
+import { ArrowRight, ChevronRight, Menu, X, MapPin, Plane, Globe, Compass, Calendar, Users, Search, LogOut } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { AnimatedGroup } from '@/components/ui/animated-group'
 import { cn } from '@/lib/utils'
 import { motion } from 'framer-motion'
+import { useAuth } from '@/context/AuthContext'
 
 const transitionVariants = {
     item: {
@@ -28,6 +28,7 @@ const transitionVariants = {
 }
 
 export function HeroSection() {
+    const { user } = useAuth();
     return (
         <>
             <HeroHeader />
@@ -40,40 +41,16 @@ export function HeroSection() {
                     <div className="h-[80rem] -translate-y-[350px] absolute left-0 top-0 w-56 -rotate-45 bg-[radial-gradient(50%_50%_at_50%_50%,hsla(0,0%,85%,.04)_0,hsla(0,0%,45%,.02)_80%,transparent_100%)]" />
                 </div>
                 <section>
-                    <div className="relative pt-24 md:pt-36">
-                        <AnimatedGroup
-                            variants={{
-                                container: {
-                                    visible: {
-                                        transition: {
-                                            delayChildren: 1,
-                                        },
-                                    },
-                                },
-                                item: {
-                                    hidden: {
-                                        opacity: 0,
-                                        y: 20,
-                                    },
-                                    visible: {
-                                        opacity: 1,
-                                        y: 0,
-                                        transition: {
-                                            type: 'spring' as const,
-                                            bounce: 0.3,
-                                            duration: 2,
-                                        },
-                                    },
-                                },
-                            }}
-                            className="absolute inset-0 -z-20">
-                            <img
-                                src="/travel_hero_background.png"
-                                alt="background"
-                                className="absolute inset-x-0 top-0 -z-20 h-full w-full object-cover opacity-60"
-                            />
-                        </AnimatedGroup>
-                        <div aria-hidden className="absolute inset-0 -z-10 size-full [background:radial-gradient(125%_125%_at_50%_100%,transparent_0%,var(--background)_75%)]" />
+                    <div 
+                        className="relative pt-24 md:pt-36 bg-cover bg-center"
+                        style={{ 
+                            backgroundImage: `linear-gradient(to bottom, rgba(5, 8, 22, 0.4), rgba(5, 8, 22, 0.9)), url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&q=80&w=2000')` 
+                        }}
+                    >
+                        <div className="absolute inset-0 -z-10 overflow-hidden">
+                            {/* Neural Grid Overlay */}
+                            <div aria-hidden className="absolute inset-0 size-full [background:radial-gradient(100%_100%_at_50%_40%,transparent_0%,#050816_100%)]" />
+                        </div>
                         <div className="mx-auto max-w-7xl px-6 relative">
                             {/* Floating Travel Icons */}
                             <motion.div 
@@ -148,7 +125,7 @@ export function HeroSection() {
                                             </div>
                                         </div>
                                         <Button asChild size="lg" className="w-full md:w-auto rounded-xl px-8 bg-blue-500 hover:bg-blue-600">
-                                            <Link to="/signup">
+                                            <Link to={user ? "/dashboard" : "/signup"}>
                                                 <Search className="mr-2 size-4" />
                                                 Search
                                             </Link>
@@ -160,8 +137,8 @@ export function HeroSection() {
                                             asChild
                                             size="lg"
                                             className="rounded-xl px-8 text-base bg-gradient-to-r from-blue-500 to-emerald-500 hover:from-blue-600 hover:to-emerald-600 border-none shadow-lg shadow-blue-500/20">
-                                            <Link to="/signup">
-                                                <span className="text-nowrap">Plan Your Trip</span>
+                                            <Link to={user ? "/dashboard" : "/signup"}>
+                                                <span className="text-nowrap">{user ? "Go to Dashboard" : "Plan Your Trip"}</span>
                                                 <ArrowRight className="ml-2 size-4" />
                                             </Link>
                                         </Button>
@@ -198,8 +175,8 @@ export function HeroSection() {
                                 />
                                 <div className="inset-shadow-2xs ring-background dark:inset-shadow-white/20 bg-background/20 backdrop-blur-md relative mx-auto max-w-6xl overflow-hidden rounded-2xl border border-white/10 p-4 shadow-2xl shadow-black/50 ring-1">
                                     <img
-                                        className="aspect-15/8 relative rounded-2xl object-cover"
-                                        src="/trip_dashboard_mockup.png"
+                                        className="aspect-15/8 relative rounded-2xl object-cover opacity-90"
+                                        src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&q=80&w=1600"
                                         alt="TraveLoop Trip Dashboard"
                                         width="2700"
                                         height="1440"
@@ -222,6 +199,7 @@ const menuItems = [
 ]
 
 const HeroHeader = () => {
+    const { user, logout } = useAuth()
     const [menuState, setMenuState] = React.useState(false)
     const [isScrolled, setIsScrolled] = React.useState(false)
 
@@ -285,34 +263,35 @@ const HeroHeader = () => {
                                 </ul>
                             </div>
                             <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
-                                <SignedOut>
-                                    <Button
-                                        asChild
-                                        variant="outline"
-                                        size="sm"
-                                        className={cn(isScrolled && 'text-blue-400')}>
-                                        <Link to="/login">
-                                            <span>Login</span>
-                                        </Link>
-                                    </Button>
-                                    <Button
-                                        asChild
-                                        size="sm"
-                                        className={cn(isScrolled && 'lg:hidden')}>
-                                        <Link to="/signup">
-                                            <span>Sign Up</span>
-                                        </Link>
-                                    </Button>
-                                    <Button
-                                        asChild
-                                        size="sm"
-                                        className={cn(isScrolled ? 'lg:inline-flex' : 'hidden')}>
-                                        <Link to="/signup">
-                                            <span>Get Started</span>
-                                        </Link>
-                                    </Button>
-                                </SignedOut>
-                                <SignedIn>
+                                {!user ? (
+                                    <>
+                                        <Button
+                                            asChild
+                                            variant="outline"
+                                            size="sm"
+                                            className={cn(isScrolled && 'text-blue-400')}>
+                                            <Link to="/login">
+                                                <span>Login</span>
+                                            </Link>
+                                        </Button>
+                                        <Button
+                                            asChild
+                                            size="sm"
+                                            className={cn(isScrolled && 'lg:hidden')}>
+                                            <Link to="/signup">
+                                                <span>Sign Up</span>
+                                            </Link>
+                                        </Button>
+                                        <Button
+                                            asChild
+                                            size="sm"
+                                            className={cn(isScrolled ? 'lg:inline-flex' : 'hidden')}>
+                                            <Link to="/signup">
+                                                <span>Get Started</span>
+                                            </Link>
+                                        </Button>
+                                    </>
+                                ) : (
                                     <div className="flex items-center gap-4">
                                         <Button
                                             asChild
@@ -323,9 +302,24 @@ const HeroHeader = () => {
                                                 <span>Dashboard</span>
                                             </Link>
                                         </Button>
-                                        <UserButton />
+                                        <div className="flex items-center gap-3">
+                                            {user.image && (
+                                                <img 
+                                                    src={user.image} 
+                                                    alt={user.name} 
+                                                    className="size-8 rounded-full border border-white/20"
+                                                />
+                                            )}
+                                            <button 
+                                                onClick={logout}
+                                                className="text-zinc-400 hover:text-white transition-colors"
+                                                title="Logout"
+                                            >
+                                                <LogOut className="size-4" />
+                                            </button>
+                                        </div>
                                     </div>
-                                </SignedIn>
+                                )}
                             </div>
                         </div>
                     </div>

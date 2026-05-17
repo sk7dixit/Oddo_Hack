@@ -1,68 +1,53 @@
-import React, { useState } from 'react';
-import { Routes, Route, Link, Navigate } from 'react-router-dom';
+import React from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
 
-// Pages
-import DashboardPage from './pages/ui/DashboardPage';
-import MyTripsPage from './pages/trips/MyTripsPage';
-import CreateTripPage from './pages/trips/CreateTripPage';
-import TripDetailsPage from './pages/trips/TripDetailsPage';
-import ProfilePage from './pages/auth/ProfilePage';
+// Redesigned Auth & App Flow
+import Signup from '@/pages/Signup';
+import Login from '@/pages/Login';
+import CompleteProfilePage from './pages/CompleteProfilePage';
+import HeroDemoPage from './pages/HeroDemoPage';
 
-// UI Feature Pages
-import PackingChecklistPage from './pages/ui/PackingChecklistPage';
-import NotesPage from './pages/ui/NotesPage';
-import PublicTripPage from './pages/ui/PublicTripPage';
-
-// Budget Feature Pages
-import BudgetPage from './pages/budget/BudgetPage';
-import ActivitySearchPage from './pages/budget/ActivitySearchPage';
-import BudgetDashboardPage from './pages/budget/BudgetDashboardPage';
-
-// Admin Routes
-import AdminRoutes from './routes/AdminRoutes';
-
-// Components
-import Navbar from './components/ui/Navbar';
-import Sidebar from './components/ui/Sidebar';
-import { useUser } from './hooks/useUser';
+// Redesigned Architecture
+import { AppRoutes } from './routes/AppRoutes';
+import ProtectedRoute from './routes/ProtectedRoute';
+import { useAuth } from './context/AuthContext';
 
 const App = () => {
-  const { user } = useUser();
+  const { user, isLoading } = useAuth();
+
+  if (isLoading) {
+    return (
+      <div className="h-screen w-full flex items-center justify-center bg-[#070B14] text-white">
+        <div className="flex flex-col items-center gap-4">
+          <div className="h-12 w-12 border-4 border-cyan-400/20 border-t-cyan-400 rounded-full animate-spin" />
+          <span className="text-sm font-medium tracking-widest uppercase opacity-50">TraveLoop</span>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="app">
-      <Navbar />
-      <div style={{ display: 'flex' }}>
-        <Sidebar />
-        <main className="main-content" style={{ flex: 1, padding: '40px' }}>
-          <Routes>
-            {/* Core App Routes */}
-            <Route path="/" element={<DashboardPage />} />
-            <Route path="/trips" element={<MyTripsPage />} />
-            <Route path="/trips/create" element={<CreateTripPage />} />
-            <Route path="/trips/:id" element={<TripDetailsPage />} />
-            <Route path="/profile" element={<ProfilePage />} />
+    <Routes>
+      {/* Public Routes */}
+      <Route path="/" element={<HeroDemoPage />} />
+      <Route path="/signup" element={<Signup />} />
+      <Route path="/login" element={<Login />} />
+      
+      {/* Profile Setup */}
+      <Route path="/complete-profile" element={
+        <ProtectedRoute requireProfileCompletion={false}>
+          <CompleteProfilePage />
+        </ProtectedRoute>
+      } />
 
-            {/* Checklist & Notes (from UI feature) */}
-            <Route path="/checklist" element={<PackingChecklistPage />} />
-            <Route path="/notes" element={<NotesPage />} />
-            <Route path="/public/:id" element={<PublicTripPage />} />
-
-            {/* Budget Routes */}
-            <Route path="/budget" element={<BudgetPage />} />
-            <Route path="/budget/activities" element={<ActivitySearchPage />} />
-            <Route path="/budget/dashboard" element={<BudgetDashboardPage />} />
-
-            {/* Admin Routes */}
-            <Route path="/admin/*" element={<AdminRoutes />} />
-
-            {/* Fallback */}
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </main>
-      </div>
-    </div>
+      {/* Main Authenticated App */}
+      <Route path="/*" element={
+        <ProtectedRoute>
+          <AppRoutes />
+        </ProtectedRoute>
+      } />
+    </Routes>
   );
 }
 

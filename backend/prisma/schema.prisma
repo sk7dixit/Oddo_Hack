@@ -1,23 +1,37 @@
 generator client {
   provider = "prisma-client-js"
-  previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
-  id           Int      @id @default(autoincrement())
-  clerkId      String   @unique
-  name         String?
+  id           String   @id @default(uuid())
+  name         String
   email        String   @unique
-  profileImage String?
+  avatar       String?
+  authProvider String   @default("email")
+  preferences  Json?
   createdAt    DateTime @default(now())
 }
 
+model Trip {
+  id          String   @id @default(uuid())
+  title       String
+  destination String
+  startDate   DateTime?
+  endDate     DateTime?
+  members     String[] // Array of user emails
+  itinerary   Json?    // Array of objects
+  budget      Json?    // Budget object
+  createdBy   String
+  createdAt   DateTime @default(now())
+}
+
 model Activity {
-  id            String   @id
+  id            String   @id @default(uuid())
   name          String
   description   String
   location      String
@@ -26,11 +40,11 @@ model Activity {
   duration      String
   imageUrl      String?
   createdAt     DateTime @default(now())
-  updatedAt     DateTime
+  updatedAt     DateTime @updatedAt
 }
 
 model Budget {
-  id                 String   @id
+  id                 String   @id @default(uuid())
   tripId             String
   userId             String
   totalTransportCost Float
@@ -41,11 +55,11 @@ model Budget {
   totalBudget        Float
   costPerDay         Float
   createdAt          DateTime @default(now())
-  updatedAt          DateTime
+  updatedAt          DateTime @updatedAt
 }
 
 model Expense {
-  id        String          @id
+  id        String          @id @default(uuid())
   tripId    String
   title     String
   category  ExpenseCategory
@@ -53,7 +67,7 @@ model Expense {
   date      DateTime
   notes     String?
   createdAt DateTime        @default(now())
-  updatedAt DateTime
+  updatedAt DateTime        @updatedAt
 }
 
 enum ExpenseCategory {
